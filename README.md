@@ -202,4 +202,8 @@ http://127.0.0.1:5000/
 - [scikit-learn](https://scikit-learn.org/)
 - [Streamlit](https://streamlit.io/)
 - [AbuseIPDB](https://www.abuseipdb.com/)
-- [NSL-KDD Dataset](https://www.unb.ca/cic/datasets/nsl.html) 
+- [NSL-KDD Dataset](https://www.unb.ca/cic/datasets/nsl.html)
+
+---
+## ⭐ Support
+- If you like this project, please ⭐ star the repository and share it.
