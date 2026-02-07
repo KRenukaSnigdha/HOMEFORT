@@ -61,7 +61,7 @@ This project includes a Flask-based Web Dashboard for live packet monitoring, th
         +------------------------+---------------------------+
                                  |
                                  v
-                        [Streamlit Dashboard]
+                        [Flask Dashboard]
 ```
 
 ---
