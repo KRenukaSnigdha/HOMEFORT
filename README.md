@@ -1,12 +1,12 @@
-# HOMEFORT
+# 🛡️ HOMEFORT
 
-## 🛡️ AI-Powered Intrusion Detection System (IDS) for Home Networks
+## AI-Powered Intrusion Detection System (IDS) for Home Networks
 
 An AI-driven Intrusion Detection System (IDS) designed to monitor home network traffic, detect suspicious activities, and generate real-time alerts using Machine Learning.
 This project includes a Flask-based Web Dashboard for live packet monitoring, threat visualization, and alert management.
 
+ <img width="1901" height="905" alt="image" src="https://github.com/user-attachments/assets/146ae9f1-b7f7-40a2-9f81-8700def838a0" />
 
-<img width="2527" height="1280" alt="Screenshot 2025-07-16 211455" src="https://github.com/user-attachments/assets/91966419-ac9c-494f-a5a5-2852607e292c" />
 
 ---
 
@@ -63,6 +63,15 @@ This project includes a Flask-based Web Dashboard for live packet monitoring, th
                                  v
                         [Flask Dashboard]
 ```
+
+---
+
+## 📊 Dashboard Modules
+- Dashboard includes:
+- Live packet table (latest captured traffic)
+- Alerts panel with severity tags
+- Live graphs updated automatically
+- CSV export for filtered packet data
 
 ---
 
@@ -167,13 +176,14 @@ Then open in browser:
 http://127.0.0.1:5000/
 
 ---
+## Screenshots
 
-## 📊 Dashboard Modules
-- Dashboard includes:
-- Live packet table (latest captured traffic)
-- Alerts panel with severity tags
-- Live graphs updated automatically
-- CSV export for filtered packet data
+<img width="1899" height="909" alt="image" src="https://github.com/user-attachments/assets/b18e9caf-9dd7-4c29-a03b-6f709b5d1e55" />
+
+<img width="517" height="799" alt="image" src="https://github.com/user-attachments/assets/45932663-6e5e-4aa9-a140-55590238b632" />
+
+<img width="585" height="896" alt="image" src="https://github.com/user-attachments/assets/a98330e1-cff9-4b54-86cb-7c8bf6967d56" />
+
 
 ---
 
