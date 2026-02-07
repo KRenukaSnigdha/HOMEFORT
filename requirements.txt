@@ -1,0 +1,12 @@
+scapy
+pandas
+scikit-learn
+#streamlit
+matplotlib
+plotly
+requests
+geoip2
+joblib
+flask
+tensorflow
+h5py
