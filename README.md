@@ -2,8 +2,7 @@
 
 ## AI-Powered Intrusion Detection System (IDS) for Home Networks
 
-An AI-driven Intrusion Detection System (IDS) designed to monitor home network traffic, detect suspicious activities, and generate real-time alerts using Machine Learning.
-This project includes a Flask-based Web Dashboard for live packet monitoring, threat visualization, and alert management.
+A hybrid IDS combining Signature rules, Machine Learning, and Threat Intelligence to detect, analyze, and alert on suspicious network activity in real time via an intuitive Flask dashboard
 
  <img width="1901" height="905" alt="image" src="https://github.com/user-attachments/assets/146ae9f1-b7f7-40a2-9f81-8700def838a0" />
 
@@ -24,44 +23,32 @@ This project includes a Flask-based Web Dashboard for live packet monitoring, th
 
 ## 🧰 Features
 ### 🔍 Packet Monitoring:
-- Captures network packets in real time
-- Stores packet logs in captured_packets.csv
-- Displays latest packets in the dashboard
-### ⚠️ Threat Detection:
-- Uses a trained ML model to classify traffic
-- Generates alerts automatically for suspicious packets
-- Alerts stored in alerts.log
-### 📊 Dashboard Analytics:
-- Packet Length Graph
-- Protocol Frequency
-- Source IP Frequency
-- Destination IP Frequency
-- Traffic Volume Monitoring
-### 🧰 Smart Filters:
-- Search by Source/Destination IP
-- Sort by packet length
-- Pagination (Next/Prev) for lag-free performance
-- Export filtered packets as CSV
+- Live capture and display of network traffic, saved for analysis.
+### ⚠️ Hybrid Threat Detection:
+- Combines signature patterns, ML classification, and IP reputation scores into a weighted decision.
+### 📊 GeoIP Visualization:
+- Maps attack origins on an interactive world heatmap.
+### 🧰Threat Intel Integration:
+- AbuseIPDB and VirusTotal
 ### 🔔 Alerts System:
-- Live alert badge count
-- Alert sound notification (optional)
-- Auto severity detection (High / Medium / Low)
+- Real-time alerts with sound notifications and severity tagging, logged for review.
 
 ---
 
 ## 🏗️ Architecture
 ```
-+-------------------+      +-------------------+      +-------------------+
-|  Packet Sniffer   | ---> |  ML Classifier    | ---> |  Alert/Block/Log  |
-+-------------------+      +-------------------+      +-------------------+
-        |                        |                           |
-        v                        v                           v
-   [captured_packets.csv]   [rf_model.joblib]         [alerts.log]
-        |                        |                           |
-        +------------------------+---------------------------+
-                                 |
-                                 v
-                        [Flask Dashboard]
++-----------------------+      +------------------------+      +---------------------------+
+|    Packet Sniffer     | ---> |  Hybrid IDS Model      | ---> | Alert/Block/Log System    |
++-----------------------+      +------------------------+      +---------------------------+
+        |                              |                                |
+        v                              v                                v
+[captured_packets.csv]      [Model: Signature + ML + Reputation]    [alerts.log, threat DB/cache]
+        |                              |                                |
+        +------------------------------+--------------------------------+
+                                       |
+                                       v
+                             [Flask Web Dashboard & Visualization]
+
 ```
 
 ---
@@ -84,8 +71,12 @@ ai-powered-ids-for-home-networks/
 │   ├── proto_encoder.joblib
 │
 ├── src/
+│   ├── dataset_prep.py
+│   ├── train_model.py
 │   ├── sniffer.py
 │   ├── realtime_detect.py
+│   ├── threat_intel.py
+│   ├── rules_engine  .py
 │
 ├── web/
 │   ├── app.py
@@ -100,6 +91,7 @@ ai-powered-ids-for-home-networks/
 ├── data/
 │   ├── captured_packets.csv
 │   ├── alerts.log
+│   ├── geoip/GeoLite2-City.mmdb
 │
 ├── requirements.txt
 ├── .gitignore
@@ -110,17 +102,11 @@ ai-powered-ids-for-home-networks/
 ---
 
 ## 🏗️ Tech Stack
-### Frontend
-- HTML5, CSS3, JavaScript
-- Chart.js for live graphs
-### Backend
-- Python Flask
-### Machine Learning
-- Random Forest model (rf_model.joblib)
-- Encoders (proto_encoder.joblib)
-### Storage
-- CSV-based packet logging
-- Log file based alert system
+- **Frontend:** HTML, CSS, JavaScript, Chart.js
+- **Backend:** Python Flask
+- **ML:** Random Forest & signature-based detection
+- **Threat Intel:** AbuseIPDB
+- **Storage:** CSV logs, alert files, GeoLite2 DB
 
 ---
 
@@ -186,12 +172,11 @@ http://127.0.0.1:5000/
 ---
 
 ## 🛡️ Security Use Case
-
-- This IDS is useful for:
-- Detecting suspicious traffic in home Wi-Fi
-- Monitoring unknown IP activity
-- Identifying abnormal packet patterns
-- Generating real-time threat alerts
+- Protects home networks by:
+- Detecting suspicious traffic
+- Monitoring unknown IPs
+- Spotting abnormal packet patterns
+- Delivering real-time threat alerts
 
 ---
 
