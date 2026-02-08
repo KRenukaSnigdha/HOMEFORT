@@ -50,11 +50,11 @@ A hybrid IDS combining Signature rules, Machine Learning, and Threat Intelligenc
 ---
 
 ## 📊 Dashboard Modules
-- Dashboard includes:
-- Live packet table (latest captured traffic)
-- Alerts panel with severity tags
-- Live graphs updated automatically
-- CSV export for filtered packet data
+- **Live Traffic:** Real-time packet capture with filters and sorting.
+- **AbuseIPDB:** IP reputation and abuse score lookup.
+- **Geo Map:** Visual attacker locations via GeoLite2.
+- **Alerts:** ML-powered, rule-based threat scoring.
+- **CSV Export:** Download filtered traffic data instantly.
 
 ---
 
