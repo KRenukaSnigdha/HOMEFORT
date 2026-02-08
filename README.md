@@ -11,14 +11,10 @@ A hybrid IDS combining Signature rules, Machine Learning, and Threat Intelligenc
 
 ## 🚀 Project Highlights
 
-- ✅ Real-time packet capture and logging
-- ✅ Machine Learning based intrusion classification
-- ✅ Live dashboard with graphs and packet table
-- ✅ Alerts generated and stored in alerts.log
-- ✅ Export filtered packet logs as CSV
-- ✅ Search + Sort + Pagination for smooth performance
-- ✅ Clean UI with security-focused layout
-
+- ✅ Real-time packet capture enhanced with GeoIP for enriched threat intelligence and location context
+- ✅ Hybrid multi-layer IDS combining signature, ML, AbuseIPDB reputation data and Geo-Location Correlation
+- ✅ Instant severity-tagged alerts with sound notifications and audit logging
+- ✅ Exportable reports and clean, security-focused user interface
 ---
 
 ## 🧰 Features
