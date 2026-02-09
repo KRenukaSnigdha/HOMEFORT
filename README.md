@@ -4,9 +4,7 @@
 
 A hybrid IDS combining Signature rules, Machine Learning, and Threat Intelligence to detect, analyze, and alert on suspicious network activity in real time via an intuitive Flask dashboard
 
-<img width="1887" height="904" alt="Screenshot 2026-02-08 222500" src="https://github.com/user-attachments/assets/209ae337-777c-44d9-8255-458c34b38a51" />
-
-
+<img width="1882" height="909" alt="image" src="https://github.com/user-attachments/assets/62bf5ed1-d77d-4526-8e2e-86e289c3fb3b" />
 
 ---
 
@@ -161,9 +159,7 @@ http://127.0.0.1:5000/
 ---
 ## Screenshots
 
-<img width="1899" height="909" alt="image" src="https://github.com/user-attachments/assets/b18e9caf-9dd7-4c29-a03b-6f709b5d1e55" />
-
-<img width="517" height="799" alt="image" src="https://github.com/user-attachments/assets/45932663-6e5e-4aa9-a140-55590238b632" /><img width="585" height="896" alt="image" src="https://github.com/user-attachments/assets/a98330e1-cff9-4b54-86cb-7c8bf6967d56" />
+<img width="1887" height="904" alt="Screenshot 2026-02-08 222500" src="https://github.com/user-attachments/assets/4d61b057-e1e2-46a8-88fa-206a36351bc5" />
 
 <img width="1900" height="906" alt="image" src="https://github.com/user-attachments/assets/2548f65a-c66e-461f-8bf2-61fe271d7b8d" />
 
