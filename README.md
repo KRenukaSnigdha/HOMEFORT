@@ -159,9 +159,13 @@ http://127.0.0.1:5000/
 ---
 ## Screenshots
 
-<img width="1901" height="917" alt="image" src="https://github.com/user-attachments/assets/d994581c-5af7-4bc6-a8fa-711cd73c1867" />
+<img width="1897" height="913" alt="image" src="https://github.com/user-attachments/assets/1b0bf0eb-2385-4b1f-8af1-70e3ab5a0ba2" />
+<img width="1897" height="544" alt="image" src="https://github.com/user-attachments/assets/a6173ff5-b8b4-41b3-a4b8-b115f355cd66" />
+<img width="1042" height="568" alt="image" src="https://github.com/user-attachments/assets/987f5750-85a6-4f0e-ba1e-e54ccb66d8cf" />
+<img width="1042" height="527" alt="image" src="https://github.com/user-attachments/assets/a066e2fb-7d88-4f77-b77c-5f2b68033f89" />
+<img width="1269" height="751" alt="image" src="https://github.com/user-attachments/assets/c51b0fb9-9cba-4e78-a5b0-c2bce922e54d" />
 
-<img width="1900" height="906" alt="image" src="https://github.com/user-attachments/assets/2548f65a-c66e-461f-8bf2-61fe271d7b8d" />
+
 
 
 ---
