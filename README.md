@@ -159,7 +159,7 @@ http://127.0.0.1:5000/
 ---
 ## Screenshots
 
-<img width="1887" height="904" alt="Screenshot 2026-02-08 222500" src="https://github.com/user-attachments/assets/4d61b057-e1e2-46a8-88fa-206a36351bc5" />
+<img width="1889" height="911" alt="image" src="https://github.com/user-attachments/assets/4137494e-1d97-4a8e-b1f0-ea50db6f37ba" />
 
 <img width="1900" height="906" alt="image" src="https://github.com/user-attachments/assets/2548f65a-c66e-461f-8bf2-61fe271d7b8d" />
 
