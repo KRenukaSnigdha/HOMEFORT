@@ -1,341 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HomeFort AI | Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeFort Dashboard</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: #f4f7fb;
-    color: #1b2430;
-}
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-/* NAVBAR */
-header {
-    background: white;
-    border-bottom: 1px solid #dbe2ea;
-    padding: 14px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
+    <!-- Leaflet Script -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+        }
 
-.logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #0a2a66, #153e8c);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    box-shadow: 0px 6px 18px rgba(0,0,0,0.12);
-}
+        header {
+            background: #0a2a66;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
 
-.brand h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 800;
-    color: #0a2a66;
-    letter-spacing: 0.5px;
-}
+        header .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-nav {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-}
+        header .logo {
+            font-size: 24px;
+        }
 
-nav a {
-    text-decoration: none;
-    font-size: 14px;
-    color: #2a3646;
-    font-weight: 600;
-    transition: 0.3s;
-    position: relative;
-}
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+            position: relative;
+        }
 
-nav a:hover {
-    color: #0a2a66;
-}
+        .badge {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            position: absolute;
+            top: -8px;
+            right: -10px;
+        }
 
-.badge {
-    position: absolute;
-    top: -7px;
-    right: -14px;
-    background: #d32f2f;
-    color: white;
-    font-size: 11px;
-    font-weight: 800;
-    padding: 3px 7px;
-    border-radius: 50px;
-}
+        .logout-btn {
+            background: crimson;
+            padding: 8px 14px;
+            border-radius: 6px;
+        }
 
-.logout-btn {
-    background: #0a2a66;
-    color: white;
-    padding: 9px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: 0.3s;
-}
+        .wrapper {
+            padding: 20px;
+        }
 
-.logout-btn:hover {
-    background: #153e8c;
-}
+        .container {
+            display: grid;
+            grid-template-columns: 260px 1fr 300px;
+            gap: 15px;
+        }
 
-/* MAIN WRAPPER */
-.wrapper {
-    max-width: 1400px;
-    margin: 35px auto;
-    padding: 0 25px;
-}
+        .card-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
 
-/* DASHBOARD GRID */
-.container {
-    display: grid;
-    grid-template-columns: 320px 1fr 380px;
-    gap: 18px;
-}
+        .main h2 {
+            margin-top: 0;
+            color: #0a2a66;
+        }
 
-/* CARD STYLE */
-.card-box {
-    background: white;
-    border: 1px solid #dbe2ea;
-    border-radius: 16px;
-    padding: 18px;
-    box-shadow: 0px 6px 20px rgba(0,0,0,0.06);
-}
+        .stats {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
 
-/* SIDEBAR */
-.sidebar h3 {
-    margin-top: 0;
-    font-size: 16px;
-    color: #0a2a66;
-    font-weight: 800;
-}
+        .filter-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
 
-.sidebar p {
-    font-size: 14px;
-    margin: 10px 0;
-    color: #3b4a5c;
-}
+        select, input {
+            padding: 8px;
+            border: 1px solid #dbe2ea;
+            border-radius: 6px;
+            outline: none;
+        }
 
-.sidebar p b {
-    color: #1b2430;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
 
-/* MAIN */
-.main h2 {
-    margin-top: 0;
-    font-size: 18px;
-    color: #0a2a66;
-    font-weight: 900;
-}
+        table th {
+            background: #0a2a66;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+        }
 
-.stats {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #56657a;
-}
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 13px;
+            cursor: pointer;
+        }
 
-/* FILTER BAR */
-.filter-box {
-    margin: 15px 0 18px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-}
+        table tr:hover {
+            background: #f0f4ff;
+        }
 
-select, input {
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: 1px solid #cbd5e1;
-    background: white;
-    color: #1b2430;
-    font-size: 13px;
-    font-weight: 600;
-    outline: none;
-}
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-.btn {
-    padding: 8px 14px;
-    border-radius: 10px;
-    border: none;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-}
+        .btn-primary {
+            background: #0a2a66;
+            color: white;
+        }
 
-.btn-primary {
-    background: #0a2a66;
-    color: white;
-}
+        .btn-secondary {
+            background: #dbe2ea;
+            color: #0a2a66;
+        }
 
-.btn-primary:hover {
-    background: #153e8c;
-}
+        .pagination {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            align-items: center;
+        }
 
-.btn-secondary {
-    background: #e5ebf3;
-    color: #0a2a66;
-}
+        .chart-container {
+            margin-top: 15px;
+            height: 400px;
+            display: flex;
+           justify-content: center;
+           align-items: center;
 
-.btn-secondary:hover {
-    background: #d7e0ec;
-}
+        }
 
-/* TABLE */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    margin-top: 10px;
-}
+        .map-box {
+            margin-top: 18px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #e5ebf3;
-    text-align: left;
-}
+        #attackMap {
+            width: 100%;
+            height: 350px;
+        }
 
-th {
-    background: #f4f7fb;
-    font-size: 13px;
-    font-weight: 800;
-    color: #0a2a66;
-}
+        .alerts h2 {
+            margin-top: 0;
+            color: #0a2a66;
+        }
 
-tbody tr:hover {
-    background: rgba(10, 42, 102, 0.08);
-    cursor: pointer;
-}
+        .alert-card {
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            border-left: 6px solid gray;
+            background: #f8f9fb;
+        }
 
-/* PAGINATION */
-.pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 14px;
-    align-items: center;
-    font-size: 13px;
-    font-weight: 700;
-    color: #2a3646;
-}
+        .sev-safe {
+            border-left-color: #1bbf4b;
+        }
 
-/* ALERTS */
-.alerts h2 {
-    margin-top: 0;
-    font-size: 18px;
-    color: #0a2a66;
-    font-weight: 900;
-}
+        .sev-suspicious {
+            border-left-color: orange;
+        }
 
-.alert-card {
-    padding: 12px;
-    margin-bottom: 12px;
-    font-size: 13px;
-    border-radius: 12px;
-    border-left: 6px solid;
-    background: #f9fbff;
-    color: #1b2430;
-    line-height: 1.5;
-    font-weight: 600;
-}
+        .sev-malicious {
+            border-left-color: crimson;
+        }
 
-.alert-empty {
-    color: #66758a;
-    font-size: 14px;
-    margin-top: 10px;
-}
+        .sev-blocked {
+            border-left-color: black;
+            background: #f1f1f1;
+        }
 
-/* SEVERITY COLORS */
-.sev-low { border-left-color: #2e7d32; }
-.sev-medium { border-left-color: #ff9800; }
-.sev-high { border-left-color: #d32f2f; }
-.sev-critical {
-    border-left-color: #7b0000;
-    background: #fff1f1;
-    font-weight: 800;
-}
+        .alert-meta {
+            font-size: 12px;
+            margin-top: 6px;
+            color: #333;
+        }
 
-/* CHARTS - STACKED */
-.chart-container {
-    margin-top: 22px;
-    background: white;
-    border-radius: 14px;
-    padding: 16px;
-    border: 1px solid #dbe2ea;
-}
+        .alert-empty {
+            color: gray;
+            font-size: 14px;
+            text-align: center;
+            padding: 15px;
+        }
 
-/* POPUP MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.55);
-    justify-content: center;
-    align-items: center;
-}
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
 
-.modal-content {
-    background: white;
-    width: 520px;
-    max-width: 95%;
-    border-radius: 16px;
-    padding: 22px;
-    box-shadow: 0px 12px 30px rgba(0,0,0,0.2);
-}
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+        }
 
-.modal-content h3 {
-    margin-top: 0;
-    color: #0a2a66;
-    font-size: 18px;
-}
-
-.modal-content p {
-    font-size: 14px;
-    margin: 8px 0;
-    color: #2a3646;
-}
-
-.close-btn {
-    float: right;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #0a2a66;
-}
-
-/* RESPONSIVE */
-@media(max-width: 1100px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-weight: bold;
+            color: crimson;
+        }
+    </style>
 </head>
 
 <body>
@@ -363,13 +276,27 @@ tbody tr:hover {
 
         <!-- SIDEBAR -->
         <div class="sidebar card-box">
-            <h3>Threat Intelligence</h3>
-            <p><b>IP:</b> {{ threat_info.ip }}</p>
-            <p><b>Abuse Score:</b> {{ threat_info.abuseConfidenceScore }}</p>
-            <p><b>Country:</b> {{ threat_info.countryCode }}</p>
-            <p><b>Usage:</b> {{ threat_info.usageType }}</p>
-            <p><b>Domain:</b> {{ threat_info.domain }}</p>
-            <p><b>Total Reports:</b> {{ threat_info.totalReports }}</p>
+            <h3>Threat Intelligence Lookup</h3>
+
+            <input type="text" id="ipLookupInput" placeholder="Enter IP (ex: 89.222.98.34)"
+                style="width:100%; padding:10px; border-radius:8px; border:1px solid #dbe2ea; margin-top:10px;">
+
+            <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="lookupThreatIntel()">
+                Check IP Reputation
+            </button>
+
+            <div id="intelBox" style="margin-top:15px; font-size:14px; color:#1b2a4a;">
+                <p style="font-size:13px;color:#56657a;">
+                    Enter an IP address to fetch AbuseIPDB + VirusTotal reputation data and Geo-location correlation.
+                </p>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #dbe2ea; margin:16px 0;">
+
+            <h3>Geo-Location Correlation</h3>
+            <p style="font-size:13px;color:#56657a;">
+                GeoLite2 maps suspicious source IPs to countries/cities, helping visualize attack origin distribution.
+            </p>
         </div>
 
         <!-- MAIN -->
@@ -425,7 +352,7 @@ tbody tr:hover {
                 <button class="btn btn-secondary" id="nextBtn">Next</button>
             </div>
 
-            <!-- CHARTS STACKED -->
+            <!-- CHARTS -->
             <div class="chart-container">
                 <canvas id="packetChart"></canvas>
             </div>
@@ -440,6 +367,19 @@ tbody tr:hover {
 
             <div class="chart-container">
                 <canvas id="severityChart"></canvas>
+            </div>
+
+            <!-- MAP -->
+            <div class="map-box">
+                <h2 style="margin-top:0;font-size:18px;color:#0a2a66;font-weight:900;">
+                    Geo-Threat Map (GeoLite2)
+                </h2>
+                <div id="attackMap"></div>
+            </div>
+
+            <!-- COUNTRY ATTACK CHART -->
+            <div class="chart-container">
+                <canvas id="countryChart"></canvas>
             </div>
         </div>
 
@@ -469,12 +409,15 @@ tbody tr:hover {
 </audio>
 
 <script>
-let packetChart, protocolChart, timeChart, severityChart;
+let packetChart, protocolChart, timeChart, severityChart, countryChart;
 let isPaused = false;
 let lastAlertCount = 0;
-
+let lastAlerts = [];
 let currentPage = 1;
 const rowsPerPage = 10;
+
+let map;
+let markersLayer;
 
 document.getElementById("pauseBtn").addEventListener("click", () => {
     isPaused = !isPaused;
@@ -514,20 +457,26 @@ function showModal(packet) {
     modal.style.display = "flex";
 }
 
-function getSeverityClass(alertText) {
-    alertText = alertText.toLowerCase();
-    if (alertText.includes("auto-blocked")) return "sev-critical";
-    if (alertText.includes("high")) return "sev-high";
-    if (alertText.includes("suspicious")) return "sev-medium";
-    return "sev-low";
+function getDecisionClass(decision, blocked) {
+    if (blocked === true) return "sev-blocked";
+    if (!decision) return "sev-safe";
+
+    decision = decision.toUpperCase();
+
+    if (decision === "MALICIOUS") return "sev-malicious";
+    if (decision === "SUSPICIOUS") return "sev-suspicious";
+    return "sev-safe";
 }
 
-function detectSeverity(alertText) {
-    alertText = alertText.toLowerCase();
-    if (alertText.includes("auto-blocked")) return "Critical";
-    if (alertText.includes("high")) return "High";
-    if (alertText.includes("suspicious")) return "Medium";
-    return "Low";
+function decisionToSeverity(decision, blocked) {
+    if (blocked === true) return "Blocked";
+    if (!decision) return "Safe";
+
+    decision = decision.toUpperCase();
+
+    if (decision === "MALICIOUS") return "Malicious";
+    if (decision === "SUSPICIOUS") return "Suspicious";
+    return "Safe";
 }
 
 function exportCSV(rows) {
@@ -553,10 +502,153 @@ document.getElementById("exportBtn").addEventListener("click", async () => {
     exportCSV(data.packets);
 });
 
+
+// ---------------- THREAT INTEL LOOKUP ----------------
+async function lookupThreatIntel() {
+    const ip = document.getElementById("ipLookupInput").value.trim();
+    const intelBox = document.getElementById("intelBox");
+
+    if (!ip) {
+        intelBox.innerHTML = `<p style="color:red;"><b>Error:</b> Please enter an IP address.</p>`;
+        return;
+    }
+
+    intelBox.innerHTML = `<p>⏳ Fetching threat intelligence for <b>${ip}</b>...</p>`;
+
+    try {
+        const res = await fetch("/api/threat-intel", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ip: ip })
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+            intelBox.innerHTML = `<p style="color:red;"><b>Error:</b> ${data.error}</p>`;
+            return;
+        }
+
+        const abuse = data.abuseipdb || {};
+        const geo = data.geo_location || {};
+        const vt = data.virustotal || {};
+
+        intelBox.innerHTML = `
+            <h4 style="margin-bottom:10px;">Threat Report</h4>
+
+            <p><b>IP:</b> ${data.ip}</p>
+            <p><b>Decision:</b> <span style="color:#0a2a66;font-weight:900;">${data.decision}</span></p>
+            <p><b>Final Hybrid Score:</b> ${data.final_score}</p>
+            <p><b>Reputation Score:</b> ${data.reputation_score}</p>
+
+            <hr style="border:0; border-top:1px solid #dbe2ea; margin:12px 0;">
+
+            <h4 style="margin-bottom:8px;">AbuseIPDB</h4>
+            <p><b>Abuse Score:</b> ${abuse.abuseConfidenceScore ?? "-"}</p>
+            <p><b>Country:</b> ${abuse.countryCode ?? "-"}</p>
+            <p><b>Usage Type:</b> ${abuse.usageType ?? "-"}</p>
+            <p><b>Domain:</b> ${abuse.domain ?? "-"}</p>
+            <p><b>Total Reports:</b> ${abuse.totalReports ?? "-"}</p>
+
+            <hr style="border:0; border-top:1px solid #dbe2ea; margin:12px 0;">
+
+            <h4 style="margin-bottom:8px;">Geo Location</h4>
+            <p><b>Country:</b> ${geo.country ?? "-"}</p>
+            <p><b>City:</b> ${geo.city ?? "-"}</p>
+            <p><b>Latitude:</b> ${geo.latitude ?? "-"}</p>
+            <p><b>Longitude:</b> ${geo.longitude ?? "-"}</p>
+
+            <hr style="border:0; border-top:1px solid #dbe2ea; margin:12px 0;">
+
+            <h4 style="margin-bottom:8px;">VirusTotal</h4>
+            <p><b>Malicious:</b> ${vt.malicious ?? "-"}</p>
+            <p><b>Suspicious:</b> ${vt.suspicious ?? "-"}</p>
+            <p><b>Harmless:</b> ${vt.harmless ?? "-"}</p>
+            <p><b>Undetected:</b> ${vt.undetected ?? "-"}</p>
+        `;
+
+    } catch (err) {
+        intelBox.innerHTML = `<p style="color:red;"><b>Error:</b> Threat intel fetch failed.</p>`;
+        console.error(err);
+    }
+}
+
+
+// ---------------- MAP INIT ----------------
+function initMap() {
+    map = L.map("attackMap").setView([20, 0], 2);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors"
+    }).addTo(map);
+
+    markersLayer = L.layerGroup().addTo(map);
+}
+
+
+// ---------------- UPDATE GEO MAP + COUNTRY CHART ----------------
+async function fetchGeoThreats() {
+    try {
+        const res = await fetch("/api/geo-threats");
+        const geoData = await res.json();
+
+        markersLayer.clearLayers();
+
+        const countryCounts = {};
+
+        geoData.forEach(entry => {
+            if (entry.latitude && entry.longitude) {
+                const popupText = `
+                    <b>IP:</b> ${entry.ip}<br>
+                    <b>Country:</b> ${entry.country}<br>
+                    <b>City:</b> ${entry.city}<br>
+                    <b>Hits:</b> ${entry.hits}<br>
+                    <b>Risk Score:</b> ${entry.risk_score}
+                `;
+
+                L.marker([entry.latitude, entry.longitude])
+                    .addTo(markersLayer)
+                    .bindPopup(popupText);
+            }
+
+            if (entry.country) {
+                countryCounts[entry.country] = (countryCounts[entry.country] || 0) + entry.hits;
+            }
+        });
+
+        const countries = Object.keys(countryCounts);
+        const counts = Object.values(countryCounts);
+
+        if (!countryChart) {
+            countryChart = new Chart(document.getElementById("countryChart"), {
+                type: "bar",
+                data: {
+                    labels: countries,
+                    datasets: [{
+                        label: "Attack Hits by Country",
+                        data: counts,
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true, animation: false }
+            });
+        } else {
+            countryChart.data.labels = countries;
+            countryChart.data.datasets[0].data = counts;
+            countryChart.update();
+        }
+
+    } catch (err) {
+        console.error("Geo Threat Fetch Error:", err);
+    }
+}
+
+
+// ---------------- UPDATE CHARTS ----------------
 function updateCharts(packets, alerts) {
 
-    // 1) PACKET LENGTH CHART
-    const lengths = packets.map(p => p.packet_length);
+    const lengths = packets.map(p => Number(p.packet_length) || 0);
+
     if (!packetChart) {
         packetChart = new Chart(document.getElementById("packetChart"), {
             type: "line",
@@ -577,7 +669,6 @@ function updateCharts(packets, alerts) {
         packetChart.update();
     }
 
-    // 2) PROTOCOL PIE CHART
     const protoCounts = { TCP: 0, UDP: 0, ICMP: 0 };
     packets.forEach(p => {
         if (protoCounts[p.protocol] !== undefined) protoCounts[p.protocol]++;
@@ -600,8 +691,8 @@ function updateCharts(packets, alerts) {
         protocolChart.update();
     }
 
-    // 3) PACKETS PER TIME (BAR)
     const timeLabels = packets.map(p => p.timestamp);
+
     if (!timeChart) {
         timeChart = new Chart(document.getElementById("timeChart"), {
             type: "bar",
@@ -620,11 +711,13 @@ function updateCharts(packets, alerts) {
         timeChart.update();
     }
 
-    // 4) ALERT SEVERITY DOUGHNUT
-    const severityCounts = { Low: 0, Medium: 0, High: 0, Critical: 0 };
+    const severityCounts = { Safe: 0, Suspicious: 0, Malicious: 0, Blocked: 0 };
+
     alerts.forEach(a => {
-        const sev = detectSeverity(a.raw);
-        severityCounts[sev]++;
+        const sev = decisionToSeverity(a.decision, a.blocked);
+        if (severityCounts[sev] !== undefined) {
+            severityCounts[sev]++;
+        }
     });
 
     if (!severityChart) {
@@ -633,7 +726,7 @@ function updateCharts(packets, alerts) {
             data: {
                 labels: Object.keys(severityCounts),
                 datasets: [{
-                    label: "Alert Severity",
+                    label: "Hybrid Severity Distribution",
                     data: Object.values(severityCounts)
                 }]
             },
@@ -645,6 +738,8 @@ function updateCharts(packets, alerts) {
     }
 }
 
+
+// ---------------- MAIN FETCH DATA ----------------
 async function fetchData() {
     if (isPaused) return;
 
@@ -654,7 +749,6 @@ async function fetchData() {
 
         document.getElementById("totalPackets").textContent = data.total_packets;
 
-        // ALERT BADGE + SOUND
         const badge = document.getElementById("alertBadge");
         if (data.alerts.length > 0) {
             badge.style.display = "inline-block";
@@ -668,7 +762,6 @@ async function fetchData() {
         }
         lastAlertCount = data.alerts.length;
 
-        // FILTER VALUES
         const protoFilter = document.getElementById("protoFilter").value;
         const srcFilter = document.getElementById("srcFilter").value.trim();
         const dstFilter = document.getElementById("dstFilter").value.trim();
@@ -697,17 +790,15 @@ async function fetchData() {
         }
 
         if (sortFilter === "length") {
-            filteredPackets.sort((a, b) => b.packet_length - a.packet_length);
+            filteredPackets.sort((a, b) => Number(b.packet_length) - Number(a.packet_length));
         }
 
-        // PAGINATION
         const start = (currentPage - 1) * rowsPerPage;
         const end = start + rowsPerPage;
         const paginatedPackets = filteredPackets.slice(start, end);
 
         document.getElementById("pageNumber").textContent = currentPage;
 
-        // TABLE
         const tbody = document.getElementById("trafficTable");
         tbody.innerHTML = "";
 
@@ -727,26 +818,63 @@ async function fetchData() {
             tbody.appendChild(row);
         });
 
-        // ALERTS (SHOW ONLY 10)
         const alertsDiv = document.getElementById("alertsContainer");
         alertsDiv.innerHTML = "";
 
-        const latestAlerts = data.alerts.slice(0, 10);
+        const latestAlerts = data.alerts.slice(1, 11);
+
+        function alertSignature(alert) {
+            return `${alert.src_ip || ""}|${alert.dst_ip || ""}|${alert.reason || ""}`;
+        }
+
+        function alertsChanged(newAlerts, oldAlerts) {
+            if (newAlerts.length !== oldAlerts.length) return true;
+            for (let i = 0; i < newAlerts.length; i++) {
+                if (alertSignature(newAlerts[i]) !== alertSignature(oldAlerts[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (alertsChanged(latestAlerts, lastAlerts)) {
+            document.getElementById("alertSound").play();
+        }
+
+        lastAlerts = latestAlerts;
 
         if (latestAlerts.length === 0) {
             alertsDiv.innerHTML = `<div class="alert-empty">No suspicious activity detected.</div>`;
         } else {
             latestAlerts.forEach(a => {
-                const sevClass = getSeverityClass(a.raw);
+                const sevClass = getDecisionClass(a.decision, a.blocked);
+
                 alertsDiv.insertAdjacentHTML("beforeend", `
                     <div class="alert-card ${sevClass}">
-                        ${a.raw}
+                        <div>
+                            <b>${a.decision || "SAFE"}</b>
+                            ${a.blocked ? " | 🚫 <b>AUTO-BLOCKED</b>" : ""}
+                        </div>
+
+                        <div style="margin-top:6px;">
+                            <b>Src:</b> ${a.src_ip || "-"} |
+                            <b>Dst:</b> ${a.dst_ip || "-"} |
+                            <b>Protocol:</b> ${a.protocol || "-"} |
+                            <b>Port:</b> ${a.dst_port || "-"}
+                        </div>
+
+                        <div class="alert-meta">
+                            <b>Final Score:</b> ${a.final_score ?? "-"} <br>
+                            <b>ML Score:</b> ${a.ml_score ?? "-"} |
+                            <b>Rule Score:</b> ${a.rule_score ?? "-"} |
+                            <b>Reputation Score:</b> ${a.reputation_score ?? "-"} <br>
+                            <b>Reason:</b> ${a.reason ?? "N/A"}
+                        </div>
                     </div>
                 `);
             });
         }
 
-        // UPDATE CHARTS USING FULL FILTERED PACKETS
         updateCharts(filteredPackets, latestAlerts);
 
     } catch (e) {
@@ -754,8 +882,14 @@ async function fetchData() {
     }
 }
 
+
+// ---------------- INIT ----------------
+initMap();
 fetchData();
+fetchGeoThreats();
+
 setInterval(fetchData, 3000);
+setInterval(fetchGeoThreats, 6000);
 </script>
 
 </body>
