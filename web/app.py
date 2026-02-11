@@ -11,7 +11,10 @@ CAPTURED_FILE = os.path.join("data", "captured_packets.csv")
 ALERTS_FILE = os.path.join("data", "alerts.log")
 
 # ------------------ GEOIP DB PATH ------------------
-GEOIP_DB = os.path.join("data", "GeoLite2-City.mmdb")
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+GEOIP_DB = os.path.join(BASE_DIR, "data", "GeoLite2-City.mmdb")
+
+
 
 MAX_ALERTS = 10
 MAX_PACKETS = 50
@@ -156,6 +159,7 @@ def read_latest_packets():
 # ------------------ GEOIP LOOKUP ------------------
 def geoip_lookup(ip):
     if not os.path.exists(GEOIP_DB):
+        print("GeoLite DB Missing:", GEOIP_DB)
         return {
             "ip": ip,
             "country": "Unknown",
@@ -175,7 +179,9 @@ def geoip_lookup(ip):
                 "latitude": response.location.latitude,
                 "longitude": response.location.longitude
             }
-    except:
+
+    except Exception as e:
+        print("GeoIP Lookup Error:", e)
         return {
             "ip": ip,
             "country": "Unknown",
@@ -183,6 +189,7 @@ def geoip_lookup(ip):
             "latitude": None,
             "longitude": None
         }
+
 
 
 # ------------------ ABUSEIPDB LOOKUP ------------------
@@ -418,4 +425,3 @@ def api_threat_intel():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
