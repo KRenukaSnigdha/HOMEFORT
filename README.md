@@ -103,7 +103,7 @@ ai-powered-ids-for-home-networks/
 - **Frontend:** HTML, CSS, JavaScript, Chart.js
 - **Backend:** Python Flask
 - **ML:** Random Forest & signature-based detection
-- **Threat Intel:** AbuseIPDB
+- **Threat Intel:** AbuseIPDB, VirusTotal
 - **Storage:** MongoDB, GeoLite2 DB
 
 ---
@@ -137,11 +137,16 @@ python src/train_model.py       # Train and save the ML model
 python src/sniffer.py           # Run in a separate terminal
 ```
 
-### 5. (Optional) Set AbuseIPDB API Key
-Get a free API key from [AbuseIPDB](https://www.abuseipdb.com/).
+### 5. (Optional) Set AbuseIPDB API Key and VirusTotal API Key
+Get a free API key from [AbuseIPDB](https://www.abuseipdb.com/) and [VirusTotal](https://docs.virustotal.com/).
 ```sh
 $env:ABUSEIPDB_API_KEY="your_api_key_here"  # Windows
 export ABUSEIPDB_API_KEY="your_api_key_here"  # Linux/Mac
+```
+
+```sh
+$env:VIRUSTOTAL_API_KEY="your_api_key_here"  # Windows
+export VIRUSTOTAL_API_KEY="your_api_key_here"  # Linux/Mac
 ```
 
 ### 6. Run Real-Time Detection
