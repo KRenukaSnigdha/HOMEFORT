@@ -44,7 +44,6 @@ header {
     box-shadow: 0px 10px 22px rgba(30, 64, 175, 0.25);
 }
 
-
 .brand h2 {
     margin: 0;
     font-size: 26px;
@@ -52,7 +51,6 @@ header {
     letter-spacing: 0.5px;
     color: #040915;
 }
-
 
 /* NAV */
 nav {
@@ -73,6 +71,11 @@ nav a:hover {
     color: #2563eb;
 }
 
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+}
+
 .login-btn {
     background: linear-gradient(90deg, #2563eb, #1e40af);
     color: #ffffff;
@@ -90,12 +93,30 @@ nav a:hover {
     box-shadow: 0px 10px 26px rgba(37, 99, 235, 0.35);
 }
 
+.register-btn {
+    background: rgba(37, 99, 235, 0.08);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    color: #1e40af;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.register-btn:hover {
+    background: rgba(37, 99, 235, 0.14);
+    transform: translateY(-2px);
+}
+
 /* HERO */
 .hero {
     padding: 70px 20px;
     display: flex;
     justify-content: center;
 }
+
 .hero-box {
     width: 100%;
     max-width: 1100px;
@@ -106,7 +127,6 @@ nav a:hover {
     box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
-
 
 .hero-badge {
     display: inline-block;
@@ -307,6 +327,48 @@ nav a:hover {
     margin-bottom: 30px;
 }
 
+/* ARCHITECTURE SECTION */
+.arch {
+    padding: 70px 70px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.arch-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 35px;
+}
+
+.arch-box {
+    background: #f8fafc;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 26px;
+    border-radius: 18px;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.arch-box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37, 99, 235, 0.25);
+    box-shadow: 0px 12px 26px rgba(37, 99, 235, 0.1);
+}
+
+.arch-box h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #1e40af;
+    font-weight: 900;
+}
+
+.arch-box p {
+    font-size: 14px;
+    color: rgba(15, 23, 42, 0.75);
+    line-height: 1.7;
+}
+
 /* FOOTER */
 footer {
     padding: 25px;
@@ -332,6 +394,9 @@ footer {
     .steps-grid {
         grid-template-columns: 1fr;
     }
+    .arch-grid {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
@@ -341,47 +406,49 @@ footer {
 <header>
     <div class="brand">
         <div class="logo">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24">
-        <path fill="white"
-            d="M12 2l8 4v6c0 5.25-3.438 10.063-8 12-4.563-1.937-8-6.75-8-12V6l8-4z" />
-        <path fill="rgba(255,255,255,0.75)"
-            d="M12 6v12.5c3.2-1.65 5.5-5.4 5.5-9.5V7.2L12 6z" />
-    </svg>
-</div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24">
+                <path fill="white"
+                    d="M12 2l8 4v6c0 5.25-3.438 10.063-8 12-4.563-1.937-8-6.75-8-12V6l8-4z" />
+                <path fill="rgba(255,255,255,0.75)"
+                    d="M12 6v12.5c3.2-1.65 5.5-5.4 5.5-9.5V7.2L12 6z" />
+            </svg>
+        </div>
 
-        <div class="brand">
-    <div>
-        <h2>HomeFort</h2>
-    </div>
-</div>
-
+        <div>
+            <h2>HomeFort</h2>
+        </div>
     </div>
 
     <nav>
         <a href="/">Home</a>
         <a href="#features">Features</a>
         <a href="#how">Workflow</a>
+        <a href="#architecture">MongoDB Storage</a>
         <a href="#contact">Contact</a>
-        <a class="login-btn" href="/login">Log In</a>
+
+        <div class="nav-buttons">
+            <a class="register-btn" href="/register">Register</a>
+            <a class="login-btn" href="/login">Log In</a>
+        </div>
     </nav>
 </header>
 
 <section class="hero">
     <div class="hero-box">
 
-        <div class="hero-badge">Enterprise-Grade Network Monitoring | Threat Intelligence</div>
+        <div class="hero-badge">Enterprise-Grade IDS | AI Detection | MongoDB Atlas Cloud Logging</div>
 
-        <h1>Monitor Your Home Network<br>With AI-Powered Protection</h1>
+        <h1>Monitor Your Home Network<br>With <span>AI-Powered Protection</span></h1>
 
         <p>
-            HomeFort AI is an intelligent intrusion detection platform designed for real-time home network security.
-            It continuously captures live traffic, detects abnormal behavior using machine learning, and generates alerts
-            to protect users from suspicious intrusions and malicious activity.
+            HomeFort AI is a real-time intrusion detection platform designed for home and IoT network security.
+            It captures live packets, detects abnormal traffic using machine learning, and generates actionable alerts.
+            All packet logs and alerts are stored securely in <b>MongoDB Atlas Cloud</b> for deployment and research scalability.
         </p>
 
         <div class="hero-buttons">
-            <a class="btn-primary" href="/dashboard">Start Monitoring Your Network</a>
-            <a class="btn-secondary" href="#features">Learn More</a>
+            <a class="btn-primary" href="/dashboard">Start Monitoring</a>
+            <a class="btn-secondary" href="#features">Explore Features</a>
         </div>
 
     </div>
@@ -391,39 +458,39 @@ footer {
     <h2>Core Features</h2>
     <p>
         A complete IDS platform designed for academic research, real-time monitoring,
-        and practical cybersecurity deployment for home environments.
+        and practical cybersecurity deployment in home environments.
     </p>
 </div>
 
 <section class="features">
     <div class="card">
         <h3>AI Threat Detection</h3>
-        <p>Detects suspicious traffic patterns using machine learning classification on real packet-level data.</p>
+        <p>Detects suspicious packet behavior using trained ML intrusion detection models in real time.</p>
     </div>
 
     <div class="card">
         <h3>Real-Time Alerts</h3>
-        <p>Generates continuous alerts when malicious activity or anomalies are detected in the network.</p>
+        <p>Generates continuous alerts for malicious traffic and abnormal packet activity.</p>
     </div>
 
     <div class="card">
         <h3>Threat Intelligence</h3>
-        <p>Validates suspicious IP addresses using blacklist intelligence and reputation-based scoring.</p>
+        <p>Validates suspicious IPs using AbuseIPDB & VirusTotal intelligence scoring mechanisms.</p>
     </div>
 
     <div class="card">
-        <h3>Auto IP Blocking</h3>
-        <p>Automatically blocks malicious IP addresses by applying firewall mitigation rules in real time.</p>
+        <h3>GeoIP Attack Mapping</h3>
+        <p>Maps suspicious IP sources using GeoLite City database for geographic threat visualization.</p>
     </div>
 
     <div class="card">
-        <h3>IoT Device Security</h3>
-        <p>Protects smart home devices, routers, laptops, mobiles, and connected IoT ecosystems.</p>
+        <h3>Multi-Device Monitoring</h3>
+        <p>Supports multiple user devices by storing traffic separately using unique device identifiers.</p>
     </div>
 
     <div class="card">
-        <h3>Security Dashboard</h3>
-        <p>Displays live traffic analytics, packet statistics, and IDS alerts through a responsive dashboard.</p>
+        <h3>Cloud Database Logging</h3>
+        <p>Stores all packets & alerts securely inside MongoDB Atlas for scalable deployment and research.</p>
     </div>
 </section>
 
@@ -431,24 +498,71 @@ footer {
     <div class="section-title">
         <h2>How It Works</h2>
         <p>
-            HomeFort AI follows a structured IDS pipeline: capture → analyze → alert → mitigate.
+            HomeFort AI follows a structured IDS pipeline: Capture → Analyze → Store → Alert → Mitigate.
         </p>
     </div>
 
     <div class="steps-grid">
         <div class="step-box">
             <h3>1. Packet Capture</h3>
-            <p>Captures real-time network packets using a sniffer and stores them into structured log files.</p>
+            <p>Captures real-time packets from Wi-Fi/Ethernet using Scapy Sniffer and extracts traffic features.</p>
         </div>
 
         <div class="step-box">
-            <h3>2. AI Analysis</h3>
-            <p>Extracts traffic features and detects malicious behavior using trained intrusion detection models.</p>
+            <h3>2. ML + Threat Intelligence</h3>
+            <p>Classifies traffic using ML model and validates suspicious IPs using reputation-based scoring.</p>
         </div>
 
         <div class="step-box">
-            <h3>3. Alert & Defense</h3>
-            <p>Generates alerts instantly and optionally blocks malicious IPs for proactive network defense.</p>
+            <h3>3. MongoDB Storage & Alerts</h3>
+            <p>Stores packets & alerts securely in MongoDB Atlas, enabling dashboard monitoring per user/device.</p>
+        </div>
+    </div>
+</section>
+
+<section class="arch" id="architecture">
+    <div class="section-title">
+        <h2>MongoDB Atlas Architecture</h2>
+        <p>
+            HomeFort AI supports scalable deployment by storing packets and alerts in MongoDB Atlas.
+            This ensures multi-user access, device-level separation, and research-friendly cloud logging.
+        </p>
+    </div>
+
+    <div class="arch-grid">
+        <div class="arch-box">
+            <h3>User-Based Data Separation</h3>
+            <p>
+                After login, each user is assigned a unique <b>user_id</b>.  
+                All stored packets and alerts contain this user_id so one user cannot access another user's traffic logs.
+            </p>
+        </div>
+
+        <div class="arch-box">
+            <h3>Device-Based Logging</h3>
+            <p>
+                Each monitored device is assigned a <b>device_id</b>.  
+                MongoDB stores packets separately for each device, allowing multi-device home network security monitoring.
+            </p>
+        </div>
+
+        <div class="arch-box">
+            <h3>Cloud Storage for Deployment</h3>
+            <p>
+                MongoDB Atlas provides a managed cloud database.  
+                This is required for production deployment and allows research-grade scalability for IEEE paper results.
+            </p>
+        </div>
+
+        <div class="arch-box">
+            <h3>Collections Used</h3>
+            <p>
+                HomeFort AI stores structured data into:
+                <br><b>packets</b> collection (traffic logs)
+                <br><b>alerts</b> collection (ML alerts)
+                <br><b>users</b> collection (login/register accounts)
+                <br><b>devices</b> collection (device tracking)
+            </p>
         </div>
     </div>
 </section>
@@ -458,14 +572,14 @@ footer {
 
     <p>
         HomeFort AI provides enterprise-level intrusion detection capabilities in a lightweight,
-        user-friendly platform suitable for real-time monitoring and academic cybersecurity research.
+        cloud-integrated platform suitable for real-time monitoring and academic cybersecurity research.
     </p>
 
     <a class="btn-primary" href="/dashboard">Get Started</a>
 </section>
 
 <footer>
-    © 2026 HomeFort AI | AI-Powered Intrusion Detection System
+    © 2026 HomeFort AI | AI-Powered Intrusion Detection System | MongoDB Atlas Cloud Logging
 </footer>
 
 </body>
