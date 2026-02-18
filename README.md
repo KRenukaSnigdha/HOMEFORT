@@ -62,6 +62,7 @@ A hybrid IDS combining Signature rules, Machine Learning, and Threat Intelligenc
 ai-powered-ids-for-home-networks/
 │
 ├── models/
+│   ├── label_encoder.joblib
 │   ├── rf_model.joblib
 │   ├── proto_encoder.joblib
 │
@@ -78,6 +79,8 @@ ai-powered-ids-for-home-networks/
 │   ├── templates/
 │   │   ├── home.html
 │   │   ├── dashboard.html
+│   │   ├── register.html
+│   │   ├── login.html
 │   ├── static/
 │   │   ├── css/style.css
 │   │   ├── js/app.js
@@ -101,7 +104,7 @@ ai-powered-ids-for-home-networks/
 - **Backend:** Python Flask
 - **ML:** Random Forest & signature-based detection
 - **Threat Intel:** AbuseIPDB
-- **Storage:** CSV logs, alert files, GeoLite2 DB
+- **Storage:** MongoDB, GeoLite2 DB
 
 ---
 
@@ -163,7 +166,8 @@ http://127.0.0.1:5000/
 <img width="1897" height="544" alt="image" src="https://github.com/user-attachments/assets/a6173ff5-b8b4-41b3-a4b8-b115f355cd66" />
 <img width="1042" height="568" alt="image" src="https://github.com/user-attachments/assets/987f5750-85a6-4f0e-ba1e-e54ccb66d8cf" />
 <img width="1042" height="527" alt="image" src="https://github.com/user-attachments/assets/a066e2fb-7d88-4f77-b77c-5f2b68033f89" />
-<img width="1269" height="751" alt="image" src="https://github.com/user-attachments/assets/c51b0fb9-9cba-4e78-a5b0-c2bce922e54d" />
+<img width="1220" height="821" alt="image" src="https://github.com/user-attachments/assets/2385f7ac-b768-42ea-857f-19638bd6b21c" />
+
 
 
 
@@ -182,7 +186,7 @@ http://127.0.0.1:5000/
 ## 🙏 Acknowledgements
 - [Scapy](https://scapy.net/)
 - [scikit-learn](https://scikit-learn.org/)
-- [Streamlit](https://streamlit.io/)
+- [Flask]()
 - [AbuseIPDB](https://www.abuseipdb.com/)
 - [NSL-KDD Dataset](https://www.unb.ca/cic/datasets/nsl.html)
 
