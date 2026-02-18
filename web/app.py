@@ -1,165 +1,97 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 import os
-import re
 import requests
-from collections import deque, Counter
+from collections import Counter
 import geoip2.database
+from pymongo import MongoClient
+from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "default_secret_key_change_this")
 
-CAPTURED_FILE = os.path.join("data", "captured_packets.csv")
-ALERTS_FILE = os.path.join("data", "alerts.log")
+# ------------------ BASE DIR ------------------
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # ------------------ GEOIP DB PATH ------------------
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 GEOIP_DB = os.path.join(BASE_DIR, "data", "GeoLite2-City.mmdb")
 
+# ------------------ API KEYS ------------------
+ABUSEIPDB_API_KEY = os.environ.get("ABUSEIPDB_API_KEY")
+VIRUSTOTAL_API_KEY = os.environ.get("VIRUSTOTAL_API_KEY")
 
+# ------------------ MONGODB ------------------
+MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017/")
+DB_NAME = os.environ.get("DB_NAME", "ids_db")
 
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
+
+packets_col = db["packets"]
+alerts_col = db["alerts"]
+users_col = db["users"]
+devices_col = db["devices"]
+
+# ------------------ LIMITS ------------------
 MAX_ALERTS = 10
 MAX_PACKETS = 50
 
-ABUSEIPDB_API_KEY = os.environ.get('ABUSEIPDB_API_KEY')
-VIRUSTOTAL_API_KEY = os.environ.get('VIRUSTOTAL_API_KEY')
-# ------------------ API KEYS (PUT YOUR KEYS HERE) ------------------
+
+# ------------------ LOGIN REQUIRED ------------------
+def require_login():
+    return "user_id" in session and "device_id" in session
 
 
-# ------------------ CACHE FOR TOTAL PACKETS ------------------
-packet_cache = {
-    "last_size": 0,
-    "total_packets": 0
-}
+# ------------------ READ PACKETS FROM MONGO ------------------
+def read_latest_packets(user_id, device_id):
+    packets = list(
+        packets_col.find(
+            {"user_id": user_id, "device_id": device_id},
+            {"_id": 0}
+        ).sort("timestamp", -1).limit(MAX_PACKETS)
+    )
 
+    packets.reverse()
 
-def get_total_packets_fast():
-    """Count packets only when file grows (cached)."""
-    if not os.path.exists(CAPTURED_FILE):
-        return 0
-
-    size = os.path.getsize(CAPTURED_FILE)
-
-    if size == packet_cache["last_size"]:
-        return packet_cache["total_packets"]
-
-    try:
-        with open(CAPTURED_FILE, "r", encoding="utf-8") as f:
-            total = sum(1 for _ in f)
-    except:
-        return packet_cache["total_packets"]
-
-    packet_cache["last_size"] = size
-    packet_cache["total_packets"] = total
-    return total
-
-
-# ------------------ ALERT READER ------------------
-def read_last_alerts():
-    if not os.path.exists(ALERTS_FILE):
-        return []
-
-    try:
-        with open(ALERTS_FILE, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-    except:
-        return []
-
-    if lines and lines[-1].strip() == "":
-        lines = lines[:-1]
-
-    unique_alerts = []
-    seen = set()
-
-    for line in lines[::-1]:
-        line = line.strip()
-        if not line:
-            continue
-
-        decision = re.search(r"\[(SAFE|SUSPICIOUS|MALICIOUS)\]", line)
-        final_score = re.search(r"FinalScore=([\d\.]+)", line)
-        ml_score = re.search(r"MLScore=([\d\.]+)", line)
-        rep_score = re.search(r"RepScore=([\d\.]+)", line)
-        rule_score = re.search(r"RuleScore=([\d\.]+)", line)
-
-        reason_match = re.search(r"Reason=(.+)$", line)
-
-        blocked = True if "AUTO-BLOCKED" in line else False
-
-        src_ip = re.search(r"'src_ip':\s*'([^']+)'", line)
-        dst_ip = re.search(r"'dst_ip':\s*'([^']+)'", line)
-        protocol = re.search(r"'protocol':\s*'([^']+)'", line)
-        dst_port = re.search(r"'dst_port':\s*'([^']+)'", line)
-        packet_length = re.search(r"'packet_length':\s*'([^']+)'", line)
-
-        key = (
-            src_ip.group(1) if src_ip else "",
-            dst_ip.group(1) if dst_ip else "",
-            protocol.group(1) if protocol else "",
-            final_score.group(1) if final_score else ""
-        )
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-
-        unique_alerts.append({
-            "raw": line,
-            "decision": decision.group(1) if decision else "UNKNOWN",
-            "final_score": float(final_score.group(1)) if final_score else None,
-            "ml_score": float(ml_score.group(1)) if ml_score else None,
-            "reputation_score": float(rep_score.group(1)) if rep_score else None,
-            "rule_score": float(rule_score.group(1)) if rule_score else None,
-            "blocked": blocked,
-            "reason": reason_match.group(1).strip() if reason_match else "Hybrid detection triggered",
-            "src_ip": src_ip.group(1) if src_ip else None,
-            "dst_ip": dst_ip.group(1) if dst_ip else None,
-            "dst_port": dst_port.group(1) if dst_port else None,
-            "protocol": protocol.group(1) if protocol else None,
-            "packet_length": packet_length.group(1) if packet_length else None
-        })
-
-        if len(unique_alerts) >= MAX_ALERTS:
-            break
-
-    return unique_alerts
-
-
-# ------------------ READ LATEST PACKETS ------------------
-def read_latest_packets():
-    if not os.path.exists(CAPTURED_FILE):
-        return []
-
-    try:
-        with open(CAPTURED_FILE, "r", encoding="utf-8") as f:
-            last_lines = deque(f, maxlen=MAX_PACKETS)
-    except:
-        return []
-
-    packets = []
-
-    for line in last_lines:
-        parts = line.strip().split(",")
-
-        if len(parts) < 7:
-            continue
-
-        packets.append({
-            "timestamp": parts[0],
-            "src_ip": parts[1],
-            "dst_ip": parts[2],
-            "src_port": parts[3],
-            "dst_port": parts[4],
-            "protocol": parts[5],
-            "packet_length": parts[6]
-        })
+    for pkt in packets:
+        if isinstance(pkt.get("timestamp"), datetime):
+            pkt["timestamp"] = pkt["timestamp"].isoformat()
 
     return packets
+
+
+# ------------------ READ ALERTS FROM MONGO ------------------
+def read_last_alerts(user_id, device_id):
+    alerts = list(
+        alerts_col.find(
+            {"user_id": user_id, "device_id": device_id},
+            {"_id": 0}
+        ).sort("timestamp", -1).limit(MAX_ALERTS)
+    )
+
+    for alert in alerts:
+        if isinstance(alert.get("timestamp"), datetime):
+            alert["timestamp"] = alert["timestamp"].isoformat()
+
+        if "packet" in alert and isinstance(alert["packet"].get("timestamp"), datetime):
+            alert["packet"]["timestamp"] = alert["packet"]["timestamp"].isoformat()
+
+    return alerts
+
+
+# ------------------ TOTAL PACKETS COUNT ------------------
+def get_total_packets(user_id, device_id):
+    try:
+        return packets_col.count_documents({"user_id": user_id, "device_id": device_id})
+    except:
+        return 0
 
 
 # ------------------ GEOIP LOOKUP ------------------
 def geoip_lookup(ip):
     if not os.path.exists(GEOIP_DB):
-        print("GeoLite DB Missing:", GEOIP_DB)
         return {
             "ip": ip,
             "country": "Unknown",
@@ -180,8 +112,7 @@ def geoip_lookup(ip):
                 "longitude": response.location.longitude
             }
 
-    except Exception as e:
-        print("GeoIP Lookup Error:", e)
+    except:
         return {
             "ip": ip,
             "country": "Unknown",
@@ -191,24 +122,14 @@ def geoip_lookup(ip):
         }
 
 
-
 # ------------------ ABUSEIPDB LOOKUP ------------------
 def abuseipdb_lookup(ip):
-    if ABUSEIPDB_API_KEY == "" or ABUSEIPDB_API_KEY == "YOUR_ABUSEIPDB_API_KEY":
-        return {
-            "enabled": False,
-            "message": "AbuseIPDB API key not configured"
-        }
+    if not ABUSEIPDB_API_KEY:
+        return {"enabled": False, "message": "AbuseIPDB API key not configured"}
 
     url = "https://api.abuseipdb.com/api/v2/check"
-    headers = {
-        "Key": ABUSEIPDB_API_KEY,
-        "Accept": "application/json"
-    }
-    params = {
-        "ipAddress": ip,
-        "maxAgeInDays": 90
-    }
+    headers = {"Key": ABUSEIPDB_API_KEY, "Accept": "application/json"}
+    params = {"ipAddress": ip, "maxAgeInDays": 90}
 
     try:
         r = requests.get(url, headers=headers, params=params, timeout=5)
@@ -236,11 +157,8 @@ def abuseipdb_lookup(ip):
 
 # ------------------ VIRUSTOTAL LOOKUP ------------------
 def virustotal_lookup(ip):
-    if VIRUSTOTAL_API_KEY == "" or VIRUSTOTAL_API_KEY == "YOUR_VIRUSTOTAL_API_KEY":
-        return {
-            "enabled": False,
-            "message": "VirusTotal API key not configured"
-        }
+    if not VIRUSTOTAL_API_KEY:
+        return {"enabled": False, "message": "VirusTotal API key not configured"}
 
     url = f"https://www.virustotal.com/api/v3/ip_addresses/{ip}"
     headers = {"x-apikey": VIRUSTOTAL_API_KEY}
@@ -263,70 +181,21 @@ def virustotal_lookup(ip):
         return {"enabled": True, "error": str(e)}
 
 
-# ------------------ THREAT SCORING ENGINE ------------------
-def calculate_threat_score(abuse_score=0, total_reports=0, ml_score=0, rule_score=0):
-    """
-    Final Hybrid Score = ML + Rule + Reputation
-    """
-
-    rep_score = 0
-
-    # Reputation scoring logic
-    if abuse_score >= 80:
-        rep_score = 5
-    elif abuse_score >= 50:
-        rep_score = 4
-    elif abuse_score >= 30:
-        rep_score = 3
-    elif abuse_score >= 10:
-        rep_score = 2
-    else:
-        rep_score = 1
-
-    if total_reports > 50:
-        rep_score += 2
-    elif total_reports > 10:
-        rep_score += 1
-
-    final_score = (ml_score * 0.4) + (rule_score * 0.3) + (rep_score * 0.3)
-
-    if final_score >= 4:
-        decision = "MALICIOUS"
-    elif final_score >= 2.5:
-        decision = "SUSPICIOUS"
-    else:
-        decision = "SAFE"
-
-    return final_score, decision, rep_score
-
-
-# ------------------ EXTRACT SUSPICIOUS IPs ------------------
-def extract_suspicious_ips():
-    if not os.path.exists(ALERTS_FILE):
-        return []
-
-    try:
-        with open(ALERTS_FILE, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-    except:
-        return []
-
-    ips = []
-
-    for line in lines[::-1]:
-        src_ip = re.search(r"'src_ip':\s*'([^']+)'", line)
-        if src_ip:
-            ips.append(src_ip.group(1))
-
-        if len(ips) >= 50:
-            break
-
-    return ips
-
-
 # ------------------ GEO THREAT REPORT ------------------
-def generate_geo_threat_report():
-    suspicious_ips = extract_suspicious_ips()
+def generate_geo_threat_report(user_id, device_id):
+    alerts = list(
+        alerts_col.find(
+            {"user_id": user_id, "device_id": device_id},
+            {"_id": 0}
+        ).sort("timestamp", -1).limit(50)
+    )
+
+    suspicious_ips = []
+    for alert in alerts:
+        pkt = alert.get("packet", {})
+        src_ip = pkt.get("src_ip")
+        if src_ip:
+            suspicious_ips.append(src_ip)
 
     if not suspicious_ips:
         return []
@@ -336,7 +205,6 @@ def generate_geo_threat_report():
 
     for ip, count in ip_counts.items():
         geo_data = geoip_lookup(ip)
-
         risk_score = min(100, count * 12)
 
         geo_results.append({
@@ -350,7 +218,6 @@ def generate_geo_threat_report():
         })
 
     geo_results.sort(key=lambda x: x["risk_score"], reverse=True)
-
     return geo_results
 
 
@@ -360,34 +227,127 @@ def home():
     return render_template("home.html")
 
 
+# ------------------ REGISTER ------------------
+@app.route("/register", methods=["GET", "POST"])
+def register_page():
+    if request.method == "GET":
+        return render_template("register.html")
+
+    name = request.form.get("name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    confirm_password = request.form.get("confirm_password")
+
+    if not name or not email or not password:
+        return "All fields are required", 400
+
+    if password != confirm_password:
+        return "Passwords do not match", 400
+
+    existing_user = users_col.find_one({"email": email})
+    if existing_user:
+        return "Email already registered. Please login.", 400
+
+    users_col.insert_one({
+        "name": name,
+        "email": email,
+        "password": password,  # later hash it
+        "created_at": datetime.utcnow()
+    })
+
+    return redirect(url_for("login_page"))
+
+
+# ------------------ LOGIN ------------------
+@app.route("/login", methods=["GET", "POST"])
+def login_page():
+    if request.method == "GET":
+        return render_template("login.html")
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+    device_id = request.form.get("device_id")
+
+    if not email or not password or not device_id:
+        return "Email, Password and Device ID required", 400
+
+    user = users_col.find_one({"email": email})
+
+    if not user:
+        return "User not found. Please register.", 400
+
+    if user["password"] != password:
+        return "Invalid password", 400
+
+    devices_col.update_one(
+        {"email": email, "device_id": device_id},
+        {"$set": {"email": email, "device_id": device_id, "last_login": datetime.utcnow()}},
+        upsert=True
+    )
+
+    session["user_id"] = email
+    session["device_id"] = device_id
+
+    return redirect(url_for("dashboard"))
+
+
+# ------------------ LOGOUT ------------------
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("home"))
+
+
+# ------------------ DASHBOARD ------------------
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    if not require_login():
+        return redirect(url_for("login_page"))
+
+    return render_template("dashboard.html", user=session["user_id"], device=session["device_id"])
 
 
+# ------------------ API DATA ------------------
 @app.route("/api/data")
 def api_data():
-    packets = read_latest_packets()
-    alerts = read_last_alerts()
-    total_packets = get_total_packets_fast()
+    if not require_login():
+        return jsonify({"error": "Not logged in"}), 401
+
+    user_id = session["user_id"]
+    device_id = session["device_id"]
+
+    packets = read_latest_packets(user_id, device_id)
+    alerts = read_last_alerts(user_id, device_id)
+    total_packets = get_total_packets(user_id, device_id)
 
     return jsonify({
         "packets": packets,
         "alerts": alerts,
-        "total_packets": total_packets
+        "total_packets": total_packets,
+        "user_id": user_id,
+        "device_id": device_id
     })
 
 
-# ------------------ GEO THREAT ENDPOINT ------------------
+# ------------------ API GEO THREATS ------------------
 @app.route("/api/geo-threats")
 def api_geo_threats():
-    geo_report = generate_geo_threat_report()
+    if not require_login():
+        return jsonify({"error": "Not logged in"}), 401
+
+    user_id = session["user_id"]
+    device_id = session["device_id"]
+
+    geo_report = generate_geo_threat_report(user_id, device_id)
     return jsonify(geo_report)
 
 
-# ------------------ NEW THREAT INTELLIGENCE ENDPOINT ------------------
+# ------------------ API THREAT INTEL ------------------
 @app.route("/api/threat-intel", methods=["POST"])
 def api_threat_intel():
+    if not require_login():
+        return jsonify({"error": "Not logged in"}), 401
+
     body = request.json
     ip = body.get("ip")
 
@@ -398,28 +358,11 @@ def api_threat_intel():
     abuse_data = abuseipdb_lookup(ip)
     vt_data = virustotal_lookup(ip)
 
-    abuse_score = abuse_data.get("abuseConfidenceScore", 0)
-    total_reports = abuse_data.get("totalReports", 0)
-
-    # (Optional) You can connect this with your ML model score later
-    ml_score = 0
-    rule_score = 0
-
-    final_score, decision, rep_score = calculate_threat_score(
-        abuse_score=abuse_score,
-        total_reports=total_reports,
-        ml_score=ml_score,
-        rule_score=rule_score
-    )
-
     return jsonify({
         "ip": ip,
         "geo_location": geo_data,
         "abuseipdb": abuse_data,
-        "virustotal": vt_data,
-        "final_score": round(final_score, 2),
-        "reputation_score": rep_score,
-        "decision": decision
+        "virustotal": vt_data
     })
 
 
