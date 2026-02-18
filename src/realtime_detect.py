@@ -1,39 +1,65 @@
-import pandas as pd
-import joblib
 import os
-from time import sleep
-import subprocess
-import sys
+import time
+import joblib
+import numpy as np
+import warnings
 import json
 from datetime import datetime
+from pymongo import MongoClient
+from dotenv import load_dotenv
 
-sys.path.append(os.path.join(os.path.dirname(__file__)))
-
-from threat_intel import check_ip_abuse
 from rules_engine import rule_based_score
+from threat_intel import check_ip_abuse
 
-DATA_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'captured_packets.csv')
-MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'rf_model.joblib')
-PROTO_ENCODER_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'proto_encoder.joblib')
-LOG_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'alerts.log')
-REPUTATION_CACHE_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'reputation_cache.json')
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# -------------------- LOAD ENV --------------------
+load_dotenv()
+
+MONGO_URI = os.environ.get("MONGO_URI")
+DB_NAME = os.environ.get("DB_NAME", "ids_db")
+
+USER_ID = os.environ.get("USER_ID", "demo_user")
+DEVICE_ID = os.environ.get("DEVICE_ID", "demo_device")
+
+MODEL_PATH = os.environ.get("MODEL_PATH", "models/rf_model.joblib")
+PROTO_ENCODER_PATH = os.environ.get("PROTO_ENCODER_PATH", "models/proto_encoder.joblib")
+LABEL_ENCODER_PATH = os.environ.get("LABEL_ENCODER_PATH", "models/label_encoder.joblib")
+
+THRESHOLD_SCORE = float(os.environ.get("THRESHOLD_SCORE", 65))  # now in percentage
+SCAN_INTERVAL = float(os.environ.get("SCAN_INTERVAL", 1.5))
+
+
+REPUTATION_CACHE_PATH = os.environ.get("REPUTATION_CACHE_PATH", "data/reputation_cache.json")
+print("🔥 UPDATED realtime_detect.py LOADED")
 
 ABUSEIPDB_API_KEY = os.environ.get('ABUSEIPDB_API_KEY')
 VIRUSTOTAL_API_KEY = os.environ.get('VIRUSTOTAL_API_KEY')
-print("🔥 UPDATED realtime_detect.py LOADED")
 print("API KEY FOUND:", bool(ABUSEIPDB_API_KEY))
 print("API KEY FOUND:", bool(VIRUSTOTAL_API_KEY))
-clf = joblib.load(MODEL_PATH)
 
-le_proto = joblib.load(PROTO_ENCODER_PATH)
+# -------------------- MONGO --------------------
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
 
-blocked_ips = set()
-
-# Map protocol string to NSL-KDD protocol_type
-PROTOCOL_MAP = {'TCP': 'tcp', 'UDP': 'udp', 'ICMP': 'icmp'}
+packets_col = db["packets"]
+alerts_col = db["alerts"]
 
 
-# ---------------- Reputation Cache ----------------
+# -------------------- LOAD MODEL --------------------
+print("[Detector] Loading model:", MODEL_PATH)
+model = joblib.load(MODEL_PATH)
+
+print("[Detector] Loading protocol encoder:", PROTO_ENCODER_PATH)
+proto_encoder = joblib.load(PROTO_ENCODER_PATH)
+
+print("[Detector] Loading label encoder:", LABEL_ENCODER_PATH)
+label_encoder = joblib.load(LABEL_ENCODER_PATH)
+
+print("[Detector] Model + encoders loaded successfully")
+
+
+# -------------------- REPUTATION CACHE --------------------
 def load_reputation_cache():
     if not os.path.exists(REPUTATION_CACHE_PATH):
         return {}
@@ -47,6 +73,7 @@ def load_reputation_cache():
 
 def save_reputation_cache(cache):
     try:
+        os.makedirs(os.path.dirname(REPUTATION_CACHE_PATH), exist_ok=True)
         with open(REPUTATION_CACHE_PATH, "w", encoding="utf-8") as f:
             json.dump(cache, f, indent=4)
     except:
@@ -58,11 +85,15 @@ reputation_cache = load_reputation_cache()
 
 def get_reputation_score(ip):
     """
-    Returns reputation score from AbuseIPDB.
-    Uses caching to avoid API overuse.
+    Returns AbuseIPDB reputation score (0-100)
+    Uses cache to avoid API spam.
     """
+    if not ip:
+        return 0, None
+
     if ip in reputation_cache:
-        return reputation_cache[ip].get("abuseConfidenceScore", 0), reputation_cache[ip]
+        cached = reputation_cache[ip]
+        return cached.get("abuseConfidenceScore", 0), cached
 
     if not ABUSEIPDB_API_KEY:
         return 0, None
@@ -76,171 +107,172 @@ def get_reputation_score(ip):
     return abuse_result.get("abuseConfidenceScore", 0), abuse_result
 
 
-# ---------------- Preprocessing ----------------
-def preprocess_row(row):
-    proto_type = PROTOCOL_MAP.get(str(row.get('protocol', '')).upper(), 'other')
+# -------------------- FETCH PACKETS --------------------
+def fetch_latest_packets(limit=50):
+    packets = list(
+        packets_col.find(
+            {"user_id": USER_ID, "device_id": DEVICE_ID},
+            {
+                "_id": 1,
+                "timestamp": 1,
+                "src_ip": 1,
+                "dst_ip": 1,
+                "src_port": 1,
+                "dst_port": 1,
+                "protocol": 1,
+                "packet_length": 1
+            }
+        ).sort("_id", -1).limit(limit)
+    )
+    packets.reverse()
+    return packets
 
-    if proto_type in le_proto.classes_:
-        row['protocol_type'] = le_proto.transform([proto_type])[0]
-    else:
-        row['protocol_type'] = 0
+
+# -------------------- ML DETECTION --------------------
+def detect_packet(packet):
+    proto = str(packet.get("protocol", "tcp")).lower()
 
     try:
-        row['src_bytes'] = int(row.get('packet_length', 0))
+        proto_enc = int(proto_encoder.transform([proto])[0])
     except:
-        row['src_bytes'] = 0
+        proto_enc = 0
 
-    row['dst_bytes'] = 0
-    return row
+    src_bytes = int(packet.get("packet_length", 0) or 0)
+    dst_bytes = 0
+
+    features = np.array([[proto_enc, src_bytes, dst_bytes]])
+
+    pred_class = model.predict(features)[0]
+
+    # probability based score
+    if hasattr(model, "predict_proba"):
+        probs = model.predict_proba(features)[0]
+
+        class_names = label_encoder.inverse_transform(model.classes_)
+        class_names = [str(c).lower() for c in class_names]
+
+        if "normal" in class_names:
+            normal_index = class_names.index("normal")
+            normal_prob = float(probs[normal_index])
+            attack_prob = 1.0 - normal_prob
+        else:
+            attack_prob = float(max(probs))
+    else:
+        attack_prob = float(pred_class)
+
+    label_name = str(label_encoder.inverse_transform([pred_class])[0])
+
+    ml_score = round(attack_prob * 100, 2)  # convert to percentage
+
+    return label_name, ml_score
 
 
-# ---------------- Blocking ----------------
-def block_ip(ip):
-    if ip in blocked_ips:
-        return
-
-    try:
-        cmd = f'netsh advfirewall firewall add rule name="IDS_Block_{ip}" dir=in action=block remoteip={ip} enable=yes'
-        subprocess.run(cmd, shell=True, check=True)
-
-        blocked_ips.add(ip)
-
-        with open(LOG_PATH, 'a', encoding="utf-8") as f:
-            f.write(f"[{datetime.now()}] AUTO-BLOCKED IP: {ip}\n")
-
-        print(f"AUTO-BLOCKED IP: {ip}")
-
-    except Exception as e:
-        with open(LOG_PATH, 'a', encoding="utf-8") as f:
-            f.write(f"[{datetime.now()}] Failed to block IP {ip}: {e}\n")
-
-        print(f"Failed to block IP {ip}: {e}")
-
-
-# ---------------- Hybrid Detection Logic ----------------
-def hybrid_decision(attack_probability, rule_score, rep_score):
+# -------------------- HYBRID SCORE --------------------
+def hybrid_final_score(ml_score, rule_score, rep_score):
     """
-    Hybrid Detection:
-    Rules + ML + Reputation = Final Score
+    Weighted Hybrid Score:
+    ML = 40%
+    Reputation = 35%
+    Rules = 25%
     """
-
-    # ML score is probability in percentage
-    ml_score = round(attack_probability * 100, 2)
-
-    # Weighted final score
     final_score = (0.40 * ml_score) + (0.35 * rep_score) + (0.25 * rule_score)
 
-    # Decision thresholds
     if final_score >= 65:
         decision = "MALICIOUS"
     elif final_score >= 35:
         decision = "SUSPICIOUS"
     else:
-        decision = "SAFE"
+        decision = "NORMAL"
 
-    return decision, round(final_score, 2), ml_score
+    return decision, round(final_score, 2)
 
 
-# ---------------- Main Loop ----------------
-def main():
-    print("Starting Hybrid IDS (Rules + ML + Reputation)...")
+# -------------------- CREATE ALERT --------------------
+def create_alert(packet, label_name, ml_score, rule_score, rep_score, final_score, decision, abuse_result=None):
+    alert_doc = {
+        "timestamp": datetime.utcnow(),
+        "user_id": USER_ID,
+        "device_id": DEVICE_ID,
 
-    file_pos = 0
+        "decision": decision,
+        "final_score": final_score,
+        "ml_score": ml_score,
+        "rule_score": rule_score,
+        "rep_score": rep_score,
+
+        "predicted_label": label_name,
+        "reason": f"Hybrid detection triggered: ML={ml_score}, RULE={rule_score}, REP={rep_score}",
+
+        "packet": {
+            "timestamp": packet.get("timestamp"),
+            "src_ip": packet.get("src_ip"),
+            "dst_ip": packet.get("dst_ip"),
+            "src_port": packet.get("src_port"),
+            "dst_port": packet.get("dst_port"),
+            "protocol": packet.get("protocol"),
+            "packet_length": packet.get("packet_length")
+        }
+    }
+
+    if abuse_result:
+        alert_doc["abuseipdb_result"] = abuse_result
+
+    alerts_col.insert_one(alert_doc)
+
+
+# -------------------- MAIN LOOP --------------------
+def start_realtime_detection():
+    print(f"[Detector] Running for USER={USER_ID} DEVICE={DEVICE_ID}")
+    print("[Detector] Real-time detection started...")
+
+    last_seen_id = None
 
     while True:
-        if not os.path.exists(DATA_PATH):
-            sleep(2)
-            continue
+        packets = fetch_latest_packets(limit=50)
 
-        try:
-            with open(DATA_PATH, "r", encoding="utf-8") as f:
-                f.seek(file_pos)
-                new_lines = f.readlines()
-                file_pos = f.tell()
+        for pkt in packets:
+            pkt_id = pkt["_id"]
 
-        except Exception as e:
-            print("Error reading file:", e)
-            sleep(2)
-            continue
-
-        if not new_lines:
-            sleep(2)
-            continue
-
-        # Remove header if it appears again
-        new_lines = [line for line in new_lines if not line.startswith("timestamp")]
-
-        for line in new_lines:
-            line = line.strip()
-
-            if not line:
+            if last_seen_id is not None and pkt_id <= last_seen_id:
                 continue
 
-            parts = line.split(",")
+            # ---------------- ML SCORE ----------------
+            label_name, ml_score = detect_packet(pkt)
 
-            # Must have 7 columns
-            if len(parts) < 7:
-                continue
+            # ---------------- RULE SCORE ----------------
+            rule_score = rule_based_score(pkt)
 
-            row = {
-                "timestamp": parts[0],
-                "src_ip": parts[1],
-                "dst_ip": parts[2],
-                "src_port": parts[3],
-                "dst_port": parts[4],
-                "protocol": parts[5].strip(),
-                "packet_length": parts[6]
-            }
+            # ---------------- REPUTATION SCORE ----------------
+            rep_score, abuse_result = get_reputation_score(pkt.get("src_ip"))
 
-            # Preprocess for ML
-            processed_row = preprocess_row(row.copy())
+            # ---------------- FINAL HYBRID SCORE ----------------
+            decision, final_score = hybrid_final_score(ml_score, rule_score, rep_score)
 
-            X = pd.DataFrame([processed_row])[['protocol_type', 'src_bytes', 'dst_bytes']]
-
-            # Predict probability
-            proba = clf.predict_proba(X)[0]
-
-            # If model has 2 classes: [normal, attack]
-            if len(proba) == 2:
-                attack_probability = proba[1]
-            else:
-                # fallback: max probability except normal
-                attack_probability = max(proba)
-
-            src_ip = row["src_ip"]
-
-            # Rule-based score
-            rules_score = rule_based_score(row)
-
-            # Reputation score
-            rep_score, abuse_result = get_reputation_score(src_ip)
-
-            # Hybrid decision
-            decision, final_score, ml_score = hybrid_decision(attack_probability, rules_score, rep_score)
-
-            # Log only suspicious or malicious
-            if decision != "SAFE":
-                alert = (
-                    f"[{decision}] FinalScore={final_score} | "
-                    f"MLScore={ml_score} | RepScore={rep_score} | RuleScore={rules_score} | "
-                    f"Data={row}"
+            # Store only Suspicious/Malicious alerts
+            if decision != "NORMAL":
+                create_alert(
+                    pkt,
+                    label_name,
+                    ml_score,
+                    rule_score,
+                    rep_score,
+                    final_score,
+                    decision,
+                    abuse_result
                 )
 
-                print(alert)
+                print("\n================ ALERT ================")
+                print(decision)
+                print(f"Src: {pkt.get('src_ip')} | Dst: {pkt.get('dst_ip')} | Protocol: {pkt.get('protocol')} | Port: {pkt.get('dst_port')}")
+                print(f"Final Score: {final_score}")
+                print(f"ML Score: {ml_score} | Rule Score: {rule_score} | Reputation Score: {rep_score}")
+                print("Timestamp:", datetime.utcnow().isoformat())
+                print("======================================\n")
 
-                with open(LOG_PATH, "a", encoding="utf-8") as f:
-                    f.write(alert + "\n")
+            last_seen_id = pkt_id
 
-                    if abuse_result:
-                        f.write(f"AbuseIPDB_Result={abuse_result}\n")
-
-                # Auto-block only malicious
-                if decision == "MALICIOUS":
-                    block_ip(src_ip)
-
-        sleep(2)
+        time.sleep(SCAN_INTERVAL)
 
 
 if __name__ == "__main__":
-    main()
-
+    start_realtime_detection()
