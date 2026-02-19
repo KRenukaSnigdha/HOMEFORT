@@ -32,17 +32,21 @@ A hybrid IDS combining Signature rules, Machine Learning, and Threat Intelligenc
 
 ## 🏗️ Architecture
 ```
-+-----------------------+      +------------------------+      +---------------------------+
-|    Packet Sniffer     | ---> |  Hybrid IDS Model      | ---> | Alert/Block/Log System    |
-+-----------------------+      +------------------------+      +---------------------------+
-        |                              |                                |
-        v                              v                                v
-[captured_packets.csv]      [Model: Signature + ML + Reputation]    [alerts.log, threat DB/cache]
-        |                              |                                |
-        +------------------------------+--------------------------------+
-                                       |
-                                       v
-                             [Flask Web Dashboard & Visualization]
++------------------------+    +--------------------------+    +------------------------------+
+|     Packet Sniffer     | -> |     Hybrid IDS Engine     | -> |   Alert / Block Generation   |
++------------------------+    +--------------------------+    +------------------------------+
+            |                           |                               |
+            |                           |                               |
+            v                           v                               v
+   [packets collection]     [Signature + ML + Reputation + Geo]   [alerts collection, blocklist]
+            |                                                           |
+            +----------------------------+------------------------------+
+                                         |
+                                         v
+                    [MongoDB Atlas Cloud Database (Central Storage)]
+                                         |
+                                         v
+                     [Flask Web Dashboard & Real-Time Visualization]
 
 ```
 
