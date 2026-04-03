@@ -1,0 +1,1073 @@
+{
+    "192.168.43.11": {
+        "ip": "192.168.43.11",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "74.125.130.136": {
+        "ip": "74.125.130.136",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "142.250.183.174": {
+        "ip": "142.250.183.174",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2024-07-16T05:45:15+00:00"
+    },
+    "35.186.224.35": {
+        "ip": "35.186.224.35",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2024-04-24T03:31:59+00:00"
+    },
+    "104.199.241.202": {
+        "ip": "104.199.241.202",
+        "abuseConfidenceScore": 10,
+        "countryCode": "TW",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 2,
+        "lastReportedAt": "2026-01-16T16:00:35+00:00"
+    },
+    "192.168.43.1": {
+        "ip": "192.168.43.1",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "35.186.224.22": {
+        "ip": "35.186.224.22",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-08-04T22:29:09+00:00"
+    },
+    "184.84.107.200": {
+        "ip": "184.84.107.200",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Fixed Line ISP",
+        "domain": "akamai.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "48.218.107.61": {
+        "ip": "48.218.107.61",
+        "abuseConfidenceScore": 0,
+        "countryCode": "JP",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": "2024-07-03T16:05:11+00:00"
+    },
+    "4.213.25.240": {
+        "ip": "4.213.25.240",
+        "abuseConfidenceScore": 3,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 3,
+        "lastReportedAt": "2026-01-29T13:07:10+00:00"
+    },
+    "4.224.116.131": {
+        "ip": "4.224.116.131",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "172.253.118.188": {
+        "ip": "172.253.118.188",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2024-10-09T15:30:16+00:00"
+    },
+    "140.82.112.21": {
+        "ip": "140.82.112.21",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Commercial",
+        "domain": "github.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-03-10T18:27:28+00:00"
+    },
+    "150.171.28.11": {
+        "ip": "150.171.28.11",
+        "abuseConfidenceScore": 25,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 12,
+        "lastReportedAt": "2026-01-23T08:06:46+00:00"
+    },
+    "52.123.128.14": {
+        "ip": "52.123.128.14",
+        "abuseConfidenceScore": 56,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 804,
+        "lastReportedAt": "2026-02-08T04:27:08+00:00"
+    },
+    "23.202.229.23": {
+        "ip": "23.202.229.23",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "akamai.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "172.217.24.163": {
+        "ip": "172.217.24.163",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "35.186.224.24": {
+        "ip": "35.186.224.24",
+        "abuseConfidenceScore": 34,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "google.com",
+        "totalReports": 34,
+        "lastReportedAt": "2026-02-04T07:58:09+00:00"
+    },
+    "49.44.178.104": {
+        "ip": "49.44.178.104",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Fixed Line ISP",
+        "domain": "jio.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "74.125.130.91": {
+        "ip": "74.125.130.91",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "52.202.168.129": {
+        "ip": "52.202.168.129",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "74.125.68.190": {
+        "ip": "74.125.68.190",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "142.250.122.94": {
+        "ip": "142.250.122.94",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "140.82.112.22": {
+        "ip": "140.82.112.22",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Commercial",
+        "domain": "github.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-06-26T02:16:24+00:00"
+    },
+    "142.250.29.94": {
+        "ip": "142.250.29.94",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "172.64.155.209": {
+        "ip": "172.64.155.209",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "cloudflare.com",
+        "totalReports": 65,
+        "lastReportedAt": "2026-02-08T12:00:21+00:00"
+    },
+    "142.251.10.91": {
+        "ip": "142.251.10.91",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "172.217.24.3": {
+        "ip": "172.217.24.3",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2021-03-14T07:33:05+00:00"
+    },
+    "146.75.122.172": {
+        "ip": "146.75.122.172",
+        "abuseConfidenceScore": 0,
+        "countryCode": "DE",
+        "usageType": "Content Delivery Network",
+        "domain": "fastly.com",
+        "totalReports": 24,
+        "lastReportedAt": "2026-02-09T16:47:44+00:00"
+    },
+    "104.18.32.47": {
+        "ip": "104.18.32.47",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "cloudflare.com",
+        "totalReports": 71,
+        "lastReportedAt": "2026-02-11T04:00:27+00:00"
+    },
+    "34.111.175.102": {
+        "ip": "34.111.175.102",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-05-30T21:40:55+00:00"
+    },
+    "49.44.120.97": {
+        "ip": "49.44.120.97",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Fixed Line ISP",
+        "domain": "jio.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "49.44.120.88": {
+        "ip": "49.44.120.88",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Fixed Line ISP",
+        "domain": "jio.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "52.123.171.14": {
+        "ip": "52.123.171.14",
+        "abuseConfidenceScore": 0,
+        "countryCode": "JP",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-02-12T08:03:07+00:00"
+    },
+    "20.42.73.25": {
+        "ip": "20.42.73.25",
+        "abuseConfidenceScore": 21,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 15,
+        "lastReportedAt": "2026-02-10T08:16:57+00:00"
+    },
+    "142.251.10.93": {
+        "ip": "142.251.10.93",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2024-06-19T04:07:23+00:00"
+    },
+    "142.251.10.190": {
+        "ip": "142.251.10.190",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "10.206.43.11": {
+        "ip": "10.206.43.11",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "10.206.43.190": {
+        "ip": "10.206.43.190",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "35.200.146.188": {
+        "ip": "35.200.146.188",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2023-05-17T01:16:25+00:00"
+    },
+    "104.208.16.95": {
+        "ip": "104.208.16.95",
+        "abuseConfidenceScore": 15,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 13,
+        "lastReportedAt": "2026-02-13T03:52:17+00:00"
+    },
+    "52.182.143.213": {
+        "ip": "52.182.143.213",
+        "abuseConfidenceScore": 2,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 10,
+        "lastReportedAt": "2026-02-09T01:34:35+00:00"
+    },
+    "20.42.73.30": {
+        "ip": "20.42.73.30",
+        "abuseConfidenceScore": 17,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 21,
+        "lastReportedAt": "2026-02-11T06:32:00+00:00"
+    },
+    "20.189.173.18": {
+        "ip": "20.189.173.18",
+        "abuseConfidenceScore": 12,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 11,
+        "lastReportedAt": "2026-02-09T03:14:56+00:00"
+    },
+    "4.190.204.134": {
+        "ip": "4.190.204.134",
+        "abuseConfidenceScore": 0,
+        "countryCode": "JP",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "140.82.113.21": {
+        "ip": "140.82.113.21",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Commercial",
+        "domain": "github.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-04-01T23:00:23+00:00"
+    },
+    "16.148.128.44": {
+        "ip": "16.148.128.44",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "13.107.5.93": {
+        "ip": "13.107.5.93",
+        "abuseConfidenceScore": 3,
+        "countryCode": "US",
+        "usageType": "Commercial",
+        "domain": "microsoft.com",
+        "totalReports": 29,
+        "lastReportedAt": "2026-02-18T01:29:15+00:00"
+    },
+    "54.200.24.80": {
+        "ip": "54.200.24.80",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "140.82.114.21": {
+        "ip": "140.82.114.21",
+        "abuseConfidenceScore": 3,
+        "countryCode": "US",
+        "usageType": "Commercial",
+        "domain": "github.com",
+        "totalReports": 2,
+        "lastReportedAt": "2026-02-07T16:00:26+00:00"
+    },
+    "140.82.113.22": {
+        "ip": "140.82.113.22",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Commercial",
+        "domain": "github.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-11-12T07:31:57+00:00"
+    },
+    "52.168.117.169": {
+        "ip": "52.168.117.169",
+        "abuseConfidenceScore": 20,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 21,
+        "lastReportedAt": "2026-02-18T00:28:09+00:00"
+    },
+    "140.82.114.22": {
+        "ip": "140.82.114.22",
+        "abuseConfidenceScore": 1,
+        "countryCode": "US",
+        "usageType": "Commercial",
+        "domain": "github.com",
+        "totalReports": 1,
+        "lastReportedAt": "2026-01-25T07:00:21+00:00"
+    },
+    "104.208.16.88": {
+        "ip": "104.208.16.88",
+        "abuseConfidenceScore": 21,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 14,
+        "lastReportedAt": "2026-02-11T06:13:08+00:00"
+    },
+    "20.189.172.76": {
+        "ip": "20.189.172.76",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-10-01T15:18:43+00:00"
+    },
+    "142.251.220.101": {
+        "ip": "142.251.220.101",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "20.189.173.2": {
+        "ip": "20.189.173.2",
+        "abuseConfidenceScore": 17,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 9,
+        "lastReportedAt": "2026-02-09T02:15:49+00:00"
+    },
+    "20.42.73.27": {
+        "ip": "20.42.73.27",
+        "abuseConfidenceScore": 10,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 13,
+        "lastReportedAt": "2026-02-11T05:19:53+00:00"
+    },
+    "52.183.220.149": {
+        "ip": "52.183.220.149",
+        "abuseConfidenceScore": 11,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 3,
+        "lastReportedAt": "2026-02-12T05:43:48+00:00"
+    },
+    "20.165.94.54": {
+        "ip": "20.165.94.54",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "49.44.119.189": {
+        "ip": "49.44.119.189",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Fixed Line ISP",
+        "domain": "jio.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "57.155.161.95": {
+        "ip": "57.155.161.95",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "98.70.194.64": {
+        "ip": "98.70.194.64",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "4.240.189.72": {
+        "ip": "4.240.189.72",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "146.75.118.172": {
+        "ip": "146.75.118.172",
+        "abuseConfidenceScore": 0,
+        "countryCode": "DE",
+        "usageType": "Content Delivery Network",
+        "domain": "fastly.com",
+        "totalReports": 6,
+        "lastReportedAt": "2026-01-29T07:03:47+00:00"
+    },
+    "92.223.116.252": {
+        "ip": "92.223.116.252",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "gcore.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "40.79.189.58": {
+        "ip": "40.79.189.58",
+        "abuseConfidenceScore": 16,
+        "countryCode": "JP",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 8,
+        "lastReportedAt": "2026-02-07T07:00:43+00:00"
+    },
+    "142.251.10.139": {
+        "ip": "142.251.10.139",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "13.107.246.72": {
+        "ip": "13.107.246.72",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "10.138.17.11": {
+        "ip": "10.138.17.11",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "34.93.75.240": {
+        "ip": "34.93.75.240",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "57.144.55.32": {
+        "ip": "57.144.55.32",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Commercial",
+        "domain": "facebook.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "216.239.34.223": {
+        "ip": "216.239.34.223",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "google.com",
+        "totalReports": 215,
+        "lastReportedAt": "2026-03-10T21:10:51+00:00"
+    },
+    "13.204.106.34": {
+        "ip": "13.204.106.34",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "10.138.17.15": {
+        "ip": "10.138.17.15",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "4.224.92.204": {
+        "ip": "4.224.92.204",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "3.111.241.224": {
+        "ip": "3.111.241.224",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "35.200.197.61": {
+        "ip": "35.200.197.61",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "54.227.247.103": {
+        "ip": "54.227.247.103",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "52.110.15.169": {
+        "ip": "52.110.15.169",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "13.69.239.68": {
+        "ip": "13.69.239.68",
+        "abuseConfidenceScore": 12,
+        "countryCode": "IE",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 6,
+        "lastReportedAt": "2026-02-11T05:31:20+00:00"
+    },
+    "52.111.252.7": {
+        "ip": "52.111.252.7",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "52.110.15.166": {
+        "ip": "52.110.15.166",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "117.239.240.111": {
+        "ip": "117.239.240.111",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Fixed Line ISP",
+        "domain": "akamai.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "20.190.175.152": {
+        "ip": "20.190.175.152",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "20.198.167.116": {
+        "ip": "20.198.167.116",
+        "abuseConfidenceScore": 0,
+        "countryCode": "SG",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-05-31T05:14:22+00:00"
+    },
+    "57.144.209.32": {
+        "ip": "57.144.209.32",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Commercial",
+        "domain": "facebook.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "4.213.25.242": {
+        "ip": "4.213.25.242",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 4,
+        "lastReportedAt": "2026-01-31T11:24:52+00:00"
+    },
+    "52.21.206.67": {
+        "ip": "52.21.206.67",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "151.101.209.91": {
+        "ip": "151.101.209.91",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Content Delivery Network",
+        "domain": "fastly.com",
+        "totalReports": 0,
+        "lastReportedAt": "2023-12-10T19:07:08+00:00"
+    },
+    "100.49.137.101": {
+        "ip": "100.49.137.101",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "172.67.70.74": {
+        "ip": "172.67.70.74",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "cloudflare.com",
+        "totalReports": 67,
+        "lastReportedAt": "2026-03-11T06:19:06+00:00"
+    },
+    "35.153.14.170": {
+        "ip": "35.153.14.170",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "18.67.161.55": {
+        "ip": "18.67.161.55",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Content Delivery Network",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "52.55.133.200": {
+        "ip": "52.55.133.200",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "35.162.235.216": {
+        "ip": "35.162.235.216",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "44.229.138.144": {
+        "ip": "44.229.138.144",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "10.166.161.11": {
+        "ip": "10.166.161.11",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "10.166.161.135": {
+        "ip": "10.166.161.135",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "104.208.16.92": {
+        "ip": "104.208.16.92",
+        "abuseConfidenceScore": 34,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 27,
+        "lastReportedAt": "2026-03-11T00:54:16+00:00"
+    },
+    "20.249.168.121": {
+        "ip": "20.249.168.121",
+        "abuseConfidenceScore": 0,
+        "countryCode": "KR",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "142.250.195.67": {
+        "ip": "142.250.195.67",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Content Delivery Network",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "142.250.206.142": {
+        "ip": "142.250.206.142",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": "2025-03-11T01:01:56+00:00"
+    },
+    "142.250.206.99": {
+        "ip": "142.250.206.99",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "google.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "199.232.105.91": {
+        "ip": "199.232.105.91",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Content Delivery Network",
+        "domain": "fastly.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "20.189.172.32": {
+        "ip": "20.189.172.32",
+        "abuseConfidenceScore": 3,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 1,
+        "lastReportedAt": "2026-02-26T05:59:00+00:00"
+    },
+    "20.52.64.201": {
+        "ip": "20.52.64.201",
+        "abuseConfidenceScore": 17,
+        "countryCode": "DE",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 5,
+        "lastReportedAt": "2026-03-10T16:53:15+00:00"
+    },
+    "13.89.179.8": {
+        "ip": "13.89.179.8",
+        "abuseConfidenceScore": 19,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 12,
+        "lastReportedAt": "2026-03-10T16:53:07+00:00"
+    },
+    "104.208.16.89": {
+        "ip": "104.208.16.89",
+        "abuseConfidenceScore": 25,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 15,
+        "lastReportedAt": "2026-03-12T02:27:26+00:00"
+    },
+    "13.89.179.13": {
+        "ip": "13.89.179.13",
+        "abuseConfidenceScore": 30,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 15,
+        "lastReportedAt": "2026-03-10T16:53:46+00:00"
+    },
+    "52.182.143.210": {
+        "ip": "52.182.143.210",
+        "abuseConfidenceScore": 29,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 20,
+        "lastReportedAt": "2026-03-10T16:53:21+00:00"
+    },
+    "52.182.141.63": {
+        "ip": "52.182.141.63",
+        "abuseConfidenceScore": 25,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 12,
+        "lastReportedAt": "2026-03-10T16:53:45+00:00"
+    },
+    "20.42.65.88": {
+        "ip": "20.42.65.88",
+        "abuseConfidenceScore": 25,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 14,
+        "lastReportedAt": "2026-03-16T02:25:08+00:00"
+    },
+    "100.50.95.151": {
+        "ip": "100.50.95.151",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "52.113.194.132": {
+        "ip": "52.113.194.132",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 16,
+        "lastReportedAt": "2026-03-22T14:11:43+00:00"
+    },
+    "20.189.173.27": {
+        "ip": "20.189.173.27",
+        "abuseConfidenceScore": 20,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 13,
+        "lastReportedAt": "2026-03-25T17:23:42+00:00"
+    },
+    "4.224.95.102": {
+        "ip": "4.224.95.102",
+        "abuseConfidenceScore": 0,
+        "countryCode": "IN",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "microsoft.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "54.244.1.165": {
+        "ip": "54.244.1.165",
+        "abuseConfidenceScore": 0,
+        "countryCode": "US",
+        "usageType": "Data Center/Web Hosting/Transit",
+        "domain": "amazon.com",
+        "totalReports": 0,
+        "lastReportedAt": null
+    },
+    "10.138.17.181": {
+        "ip": "10.138.17.181",
+        "abuseConfidenceScore": 0,
+        "countryCode": null,
+        "usageType": "Reserved",
+        "domain": null,
+        "totalReports": 0,
+        "lastReportedAt": null
+    }
+}
